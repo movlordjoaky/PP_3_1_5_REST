@@ -10,8 +10,8 @@ public class Role {
     @Id
     private Long id;
     private String role;
-    @ManyToMany
-    List<User> usersWithRole;
+    @ManyToMany(mappedBy = "roles")
+    List<User> users;
 
     public void setId(Long id) {
         this.id = id;
