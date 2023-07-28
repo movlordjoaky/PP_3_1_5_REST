@@ -11,7 +11,7 @@
         <li th:each="user : ${users}">
             <span th:text="${user}">Пользователь</span>
             <a th:href="@{/edit/{id}(id=${user.getId()})}">Изменить</a>
-            <form th:method="DELETE" th:action="@{/{id}(id=${user.getId()})}">
+            <form th:method="DELETE" th:action="@{/delete/{id}(id=${user.getId()})}">
                 <input type="submit" value="Удалить">
             </form>
         </li>

@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -56,8 +57,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("Пользователь %s не найден", username));
         } else {
-            System.out.println(user);
-            System.out.println(user.getAuthorities());
+            Hibernate.initialize(user.getAuthorities());
             return user;
         }
     }

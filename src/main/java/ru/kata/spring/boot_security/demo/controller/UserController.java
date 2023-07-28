@@ -26,29 +26,32 @@ public class UserController {
     // страница добавления пользователя
     @GetMapping(value = "/add")
     public String addUserForm(@ModelAttribute("user") User user) {
+        System.out.println("addUserForm");
         return "add";
     }
 
     // команда на форме добавления пользователя
-    @PostMapping()
+    @PostMapping("/add")
     public String addUser(@ModelAttribute User user) {
+        System.out.println("addUser");
         userService.addUser(user);
+        System.out.println("userService.addUser(user)");
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/edit/{id}")
-    public String changeUserForm(Model model, @PathVariable int id) {
+    public String editUserForm(Model model, @PathVariable int id) {
         model.addAttribute("user", userService.getUserById(id));
-        return "change";
+        return "edit";
     }
 
-    @PatchMapping(value = "/{id}")
-    public String changeUser(@ModelAttribute User user, @PathVariable int id) {
+    @PatchMapping(value = "/edit/{id}")
+    public String editUser(@ModelAttribute User user, @PathVariable int id) {
         userService.changeUser(user, id);
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable int id) {
         userService.deleteUserById(id);
         return "redirect:/admin";

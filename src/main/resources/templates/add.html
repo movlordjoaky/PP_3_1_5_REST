@@ -7,10 +7,10 @@
 <body>
 <h3>Добавление пользователя</h3>
 <div>
-    <form method="POST" action="/" th:object="${user}">
+    <form method="POST" action="/add" th:object="${user}">
         <div>
             <label for="name">Имя (строка)</label>
-            <input name="name" type="text" id="name" th:field="*{name}">
+            <input name="name" type="text" id="name" th:field="*{name}" autofocus>
         </div>
         <div>
             <label for="age">Возраст (целое число)</label>
@@ -19,6 +19,14 @@
         <div>
             <label for="skill">Мастерство (вещественное число)</label>
             <input name="skill" type="text" id="skill">
+        </div>
+        <div>
+            <label for="username">Логин</label>
+            <input name="username" type="text" id="username" required>
+        </div>
+        <div>
+            <label for="password">Пароль</label>
+            <input name="password" type="password" id="password" required>
         </div>
         <input type="submit" value="Сохранить">
     </form>

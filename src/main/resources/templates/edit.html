@@ -7,10 +7,10 @@
 <body>
 <h3 th:text="'Изменение пользователя ' + ${user.name}"></h3>
 <div>
-    <form th:method="PATCH" th:action="@{/{id}(id=${user.getId()})}" th:object="${user}">
+    <form th:method="PATCH" th:action="@{/edit/{id}(id=${user.getId()})}" th:object="${user}">
         <div>
             <label for="name">Имя (строка)</label>
-            <input type="text" id="name" th:field="*{name}" th:value="${user.getName()}">
+            <input type="text" id="name" th:field="*{name}" th:value="${user.getName()}" autofocus>
         </div>
         <div>
             <label for="age">Возраст (целое число)</label>
@@ -19,6 +19,14 @@
         <div>
             <label for="skill">Мастерство (вещественное число)</label>
             <input name="skill" type="text" id="skill" th:value="${user.getSkill()}">
+        </div>
+        <div>
+            <label for="username">Логин</label>
+            <input name="username" type="text" id="username" th:value="${user.getUsername()}" required>
+        </div>
+        <div>
+            <label for="password">Пароль</label>
+            <input name="password" type="text" id="password" required>
         </div>
         <input type="submit" value="Сохранить">
     </form>
