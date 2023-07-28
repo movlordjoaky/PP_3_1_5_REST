@@ -18,9 +18,8 @@ public class User implements UserDetails {
     private String name;
     private int age;
     private double skill;
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String username;
-    @Column(nullable = false)
     private String password;
 
     @ManyToMany
@@ -76,6 +75,14 @@ public class User implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

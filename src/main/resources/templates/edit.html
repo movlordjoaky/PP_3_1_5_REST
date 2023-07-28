@@ -26,7 +26,7 @@
         </div>
         <div>
             <label for="password">Пароль</label>
-            <input name="password" type="password" id="password" required>
+            <input name="password" type="password" id="password" th:value="${user.getPassword()}" required>
         </div>
         <input type="submit" value="Сохранить">
     </form>
