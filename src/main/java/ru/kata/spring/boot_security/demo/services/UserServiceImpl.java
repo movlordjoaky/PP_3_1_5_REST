@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
     private final UserDAO userDAOImpl;
 
     @Autowired
@@ -58,6 +58,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("Пользователь %s не найден", username));
         } else {
+            System.out.println(user);
+            System.out.println(user.getAuthorities());
             return user;
         }
     }
