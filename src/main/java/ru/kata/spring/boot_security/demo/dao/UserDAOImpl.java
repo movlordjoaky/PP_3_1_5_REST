@@ -20,6 +20,10 @@ public class UserDAOImpl implements UserDAO {
     public UserDAOImpl() {
     }
 
+    public User findByUsername(String username) {
+        return null;
+    }
+
     @Override
     public List<User> getAllUsers() {
         TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user", User.class);
