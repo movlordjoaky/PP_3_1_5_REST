@@ -18,7 +18,9 @@ public class User implements UserDetails {
     private String name;
     private int age;
     private double skill;
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany
@@ -33,6 +35,11 @@ public class User implements UserDetails {
         this.name = name;
         this.age = age;
         this.skill = skill;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public int getId() {
@@ -67,9 +74,13 @@ public class User implements UserDetails {
         this.skill = skill;
     }
 
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
-        return id + ". " + name + ", " + age + " лет. Мастерство: " + skill;
+        return name + ", " + age + " лет. Мастерство: " + skill + ". Логин: " + username;
     }
 
     @Override

@@ -26,16 +26,12 @@ public class UserController {
     // страница добавления пользователя
     @GetMapping(value = "/add")
     public String addUserForm(@ModelAttribute("user") User user) {
-        System.out.println("addUserForm");
         return "add";
     }
 
     // команда на форме добавления пользователя
     @PostMapping("/add")
     public String addUser(@ModelAttribute User user) {
-        System.out.println("addUser");
-        userService.addUser(user);
-        System.out.println("userService.addUser(user)");
         return "redirect:/admin";
     }
 
