@@ -47,13 +47,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addUser(User user) {
-        System.out.println("1222" + user);
-        List<String> roleNames = user.getRoles().stream()
-                .map(Role::getName)
-                .collect(Collectors.toList());
-        TypedQuery<Role> query = entityManager.createQuery("SELECT r FROM Role r WHERE r.name IN (:rolesNames)", Role.class);
-        query.setParameter("rolesNames", roleNames);
-        Set<Role> updatedRoles = new HashSet<>(query.getResultList());
+        Set<Role> updatedRoles = getRoleNamesFromRoles(user);
         updatedRoles.addAll(user.getRoles());
         user.setRoles(updatedRoles);
         entityManager.persist(user);
@@ -61,19 +55,19 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void changeUser(User newUser, int id) {
-        System.out.println("newUser" + newUser);
         User oldUser = entityManager.find(User.class, id);
-        System.out.println("oldUser" + oldUser);
         newUser.setId(oldUser.getId());
-        System.out.println("updatedUser" + newUser);
-        List<String> roleNames = newUser.getRoles().stream()
+        newUser.setRoles(getRoleNamesFromRoles(newUser));
+        entityManager.merge(newUser);
+    }
+
+    private Set<Role> getRoleNamesFromRoles(User user) {
+        List<String> roleNames = user.getRoles().stream()
                 .map(Role::getName)
                 .collect(Collectors.toList());
         TypedQuery<Role> query = entityManager.createQuery("SELECT r FROM Role r WHERE r.name IN (:rolesNames)", Role.class);
         query.setParameter("rolesNames", roleNames);
-        Set<Role> updatedRoles = new HashSet<>(query.getResultList());
-        newUser.setRoles(updatedRoles);
-        entityManager.merge(newUser);
+        return new HashSet<>(query.getResultList());
     }
 
     @Override
