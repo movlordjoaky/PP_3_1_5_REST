@@ -32,7 +32,6 @@ public class UserController {
     // команда на форме добавления пользователя
     @PostMapping("/add")
     public String addUser(@ModelAttribute User user) {
-        System.out.println("1234" + user);
         userService.addUser(user);
         return "redirect:/admin";
     }

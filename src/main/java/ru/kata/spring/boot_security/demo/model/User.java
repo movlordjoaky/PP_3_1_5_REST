@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
@@ -34,6 +35,14 @@ public class User implements UserDetails {
         this.name = name;
         this.age = age;
         this.skill = skill;
+    }
+
+    public User(String name, int age, double skill, String username, String password) {
+        this.name = name;
+        this.age = age;
+        this.skill = skill;
+        this.username = username;
+        this.password = password;
     }
 
     public User(String username, String password) {
