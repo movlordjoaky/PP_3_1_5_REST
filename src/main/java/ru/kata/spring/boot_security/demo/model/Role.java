@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Role implements GrantedAuthority {
@@ -13,7 +14,7 @@ public class Role implements GrantedAuthority {
     @Column(unique = true)
     private String name;
     @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private Set<User> users;
 
     public Role() {
     }
@@ -22,7 +23,7 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 

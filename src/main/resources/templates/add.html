@@ -10,23 +10,31 @@
     <form method="POST" action="/add" th:object="${user}">
         <div>
             <label for="name">Имя (строка)</label>
-            <input name="name" type="text" id="name" autofocus>
+            <input th:name="name" type="text" id="name" autofocus>
         </div>
         <div>
             <label for="age">Возраст (целое число)</label>
-            <input name="age" type="text" id="age">
+            <input th:name="age" type="text" id="age">
         </div>
         <div>
             <label for="skill">Мастерство (вещественное число)</label>
-            <input name="skill" type="text" id="skill">
+            <input th:name="skill" type="text" id="skill">
         </div>
         <div>
             <label for="username">Логин</label>
-            <input name="username" type="text" id="username" required>
+            <input th:name="username" type="text" id="username" required>
         </div>
         <div>
             <label for="password">Пароль</label>
-            <input name="password" type="password" id="password" required>
+            <input th:name="password" type="password" id="password" required>
+        </div>
+        <div>
+            <label for="roles">Роли</label>
+            <select th:name="roles" id="roles" multiple required>
+                <option value="ROLE_ADMIN">ADMIN</option>
+                <option value="ROLE_USER">USER</option>
+            </select>
+
         </div>
         <input type="submit" value="Сохранить">
     </form>

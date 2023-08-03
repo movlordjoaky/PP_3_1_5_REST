@@ -31,7 +31,7 @@ public class UserController {
 
     // команда на форме добавления пользователя
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user) {
+    public String addUser(@ModelAttribute User user, @RequestParam(value = "roles") String[] roles, Model model) {
         userService.addUser(user);
         return "redirect:/admin";
     }

@@ -22,12 +22,12 @@ public class TestUserService implements CommandLineRunner {
 
         // ADMIN --- username: petya --- password: pass1
         User user1 = new User("Петя", 16, 8.8, "petya", "pass1");
-        user1.setRoles(Collections.singletonList(adminRole));
+        user1.setRoles(Collections.singleton(adminRole));
         userService.addUser(user1);
 
         // USER --- username: masha --- password: pass2
         User user2 = new User("Маша", 20, 9.8, "masha", "pass2");
-        user2.setRoles(Collections.singletonList(userRole));
+        user2.setRoles(Collections.singleton(userRole));
         userService.addUser(user2);
     }
 }
