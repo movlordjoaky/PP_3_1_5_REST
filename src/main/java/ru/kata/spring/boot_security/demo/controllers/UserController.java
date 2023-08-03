@@ -11,7 +11,7 @@ import ru.kata.spring.boot_security.demo.services.UserService;
 @Controller
 public class UserController {
     private final UserService userService;
-    private RoleService roleService;
+    private final RoleService roleService;
 
     @Autowired
     public UserController(UserService userService, RoleService roleService) {
@@ -34,8 +34,7 @@ public class UserController {
 
     // команда на форме добавления пользователя
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user, @RequestParam(value = "roles") String[] roles) {
-        System.out.println("1234" + user);
+    public String addUser(@ModelAttribute User user) {
         userService.addUser(user);
         return "redirect:/admin";
     }

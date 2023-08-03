@@ -9,14 +9,13 @@ import java.util.Set;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    private RoleDAO roleDAO;
+    private final RoleDAO roleDAOImpl;
 
-    public RoleServiceImpl(RoleDAO roleDAO) {
-        this.roleDAO = roleDAO;
+    public RoleServiceImpl(RoleDAO roleDAOImpl) {
+        this.roleDAOImpl = roleDAOImpl;
     }
 
     public Set<Role> getAllRoles() {
-        RoleDAO roleDAOImpl;
-        return roleDAO.getAllRoles();
+        return roleDAOImpl.getAllRoles();
     }
 }
