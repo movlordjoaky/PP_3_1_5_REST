@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
-//    private UserRepository userRepository;
 
     public UserDAOImpl() {
     }
