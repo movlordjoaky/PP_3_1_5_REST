@@ -7,7 +7,7 @@
 <body>
 <h3 th:text="'Изменение пользователя ' + ${user.name}"></h3>
 <div>
-    <form th:method="PATCH" th:action="@{/edit/{id}(id=${user.getId()})}" th:object="${user}">
+    <form th:method="PATCH" th:action="@{/edit-user/{id}(id=${user.getId()})}" th:object="${user}">
         <div>
             <label for="name">Имя (строка)</label>
             <input type="text" id="name" th:field="*{name}" th:value="${user.getName()}" autofocus>
@@ -28,7 +28,15 @@
             <label for="password">Пароль</label>
             <input name="password" type="password" id="password" th:value="${user.getPassword()}" required>
         </div>
-        <input type="submit" value="Сохранить">
+        <div>
+            <label for="roles">Роли</label>
+            <select th:name="roles" id="roles" multiple required>
+                <option th:each="role : ${allRoles}" th:value="${role.name}" th:selected="${user.roles.contains(role)}"
+                        th:text="${role.name.replaceFirst('ROLE_', '')}">ROLE_NAME
+                </option>
+            </select>
+        </div>
+        <input type="submit" value="Обновить">
     </form>
     <div th:replace="logout :: logout"></div>
 </div>

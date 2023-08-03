@@ -56,24 +56,24 @@ public class UserDAOImpl implements UserDAO {
         Set<Role> updatedRoles = new HashSet<>(query.getResultList());
         updatedRoles.addAll(user.getRoles());
         user.setRoles(updatedRoles);
-        entityManager.merge(user);
+        entityManager.persist(user);
     }
-//    @Override
-//    public void addUser(User user) {
-//        entityManager.persist(user);
-//    }
-//    @Override
-//    public void addUser(User user) {
-//        userRepository.save(user);
-//    }
 
     @Override
     public void changeUser(User newUser, int id) {
-        User user = entityManager.find(User.class, id);
-        user.setName(newUser.getName());
-        user.setAge(newUser.getAge());
-        user.setSkill(newUser.getSkill());
-        entityManager.merge(user);
+        System.out.println("newUser" + newUser);
+        User oldUser = entityManager.find(User.class, id);
+        System.out.println("oldUser" + oldUser);
+        newUser.setId(oldUser.getId());
+        System.out.println("updatedUser" + newUser);
+        List<String> roleNames = newUser.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toList());
+        TypedQuery<Role> query = entityManager.createQuery("SELECT r FROM Role r WHERE r.name IN (:rolesNames)", Role.class);
+        query.setParameter("rolesNames", roleNames);
+        Set<Role> updatedRoles = new HashSet<>(query.getResultList());
+        newUser.setRoles(updatedRoles);
+        entityManager.merge(newUser);
     }
 
     @Override
