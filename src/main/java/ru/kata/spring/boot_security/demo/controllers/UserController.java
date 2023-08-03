@@ -1,10 +1,10 @@
-package ru.kata.spring.boot_security.demo.controller;
+package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 @Controller
@@ -31,7 +31,8 @@ public class UserController {
 
     // команда на форме добавления пользователя
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user, @RequestParam(value = "roles") String[] roles, Model model) {
+    public String addUser(@ModelAttribute User user, @RequestParam(value = "roles") String[] roles) {
+        System.out.println("1234" + user);
         userService.addUser(user);
         return "redirect:/admin";
     }

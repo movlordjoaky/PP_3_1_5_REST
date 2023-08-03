@@ -1,17 +1,24 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.models.Role;
+import ru.kata.spring.boot_security.demo.models.User;
+//import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
+//    private UserRepository userRepository;
 
     public UserDAOImpl() {
     }
@@ -40,8 +47,25 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addUser(User user) {
+        System.out.println("1222" + user);
+        List<String> roleNames = user.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toList());
+        TypedQuery<Role> query = entityManager.createQuery("SELECT r FROM Role r WHERE r.name IN (:rolesNames)", Role.class);
+        query.setParameter("rolesNames", roleNames);
+        Set<Role> updatedRoles = new HashSet<>(query.getResultList());
+        updatedRoles.addAll(user.getRoles());
+        user.setRoles(updatedRoles);
         entityManager.merge(user);
     }
+//    @Override
+//    public void addUser(User user) {
+//        entityManager.persist(user);
+//    }
+//    @Override
+//    public void addUser(User user) {
+//        userRepository.save(user);
+//    }
 
     @Override
     public void changeUser(User newUser, int id) {

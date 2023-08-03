@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.model;
+package ru.kata.spring.boot_security.demo.models;
 
 //import jakarta.persistence.*;
 
@@ -95,7 +95,7 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return name + ", " + age + " лет. Мастерство: " + skill + ". Логин: " + username;
+        return name + ", " + age + " лет --- Мастерство: " + skill + " --- Логин: " + username + " --- Роли: " + roles.toString().replace("[", "").replace("]", "").trim();
     }
 
     @Override
@@ -131,5 +131,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 }

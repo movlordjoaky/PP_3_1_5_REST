@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.model;
+package ru.kata.spring.boot_security.demo.models;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -12,6 +12,7 @@ public class Role implements GrantedAuthority {
     private Long id;
     @Column(unique = true)
     private String name;
+    //    @ManyToMany(mappedBy = "roles", cascade = CascadeType.PERSIST)
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
@@ -24,6 +25,10 @@ public class Role implements GrantedAuthority {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setId(Long id) {
@@ -41,6 +46,21 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return name;
+        return name.replaceFirst("ROLE_", "");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Role role = (Role) o;
+
+        return name.equals(role.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }
