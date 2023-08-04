@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="ru">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<header th:fragment="header" class="navbar bg-dark text-light d-flex justify-content-between">
+    <!--/*@thymesVar id="account" type="ru.kata.spring.boot_security.demo.model.User"*/-->
+    <div>
+    <span class="font-weight-bold" th:text="${account.getFirstName()}">
+        Email пользователя
+    </span>
+        with roles:
+        <span th:text="${account.getRoles()}">РОЛИ</span>
+    </div>
+    <a class="float-right text-muted" href="/logout">Выйти</a>
+</header>
+</body>
+</html>

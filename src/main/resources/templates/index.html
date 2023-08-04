@@ -2,12 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="ru">
 <head>
-    <title>Стартовая страница</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Login page</title>
 </head>
 <body>
-<div>
-    <h1>Стартовая страница</h1>
-    <a href="/login">Войти</a>
+<div class="d-flex justify-content-center">
+    <div class="w-25 p-3">
+        <h4 class="mt-4 mb-3"><strong>Please sign in</strong></h4>
+        <!--/*@thymesVar id="account" type="ru.kata.spring.boot_security.demo.model.User"*/-->
+        <form method="POST" th:action="@{/login}" th:object="${account}">
+            <div class="mb-2">
+                <input class="form-control" name="username" type="email" id="username" autofocus
+                       placeholder="Email address">
+                <input class="form-control" name="password" type="password" id="password" required
+                       placeholder="Password">
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+        <div class="mt-2 text-center text-danger" th:text="${errorMessage}"></div>
+    </div>
 </div>
 </body>
 </html>

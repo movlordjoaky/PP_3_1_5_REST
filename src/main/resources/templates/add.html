@@ -7,7 +7,7 @@
 <body>
 <h3>Добавление пользователя</h3>
 <div>
-    <form method="POST" action="/add" th:object="${user}">
+    <form method="POST" action="/add" th:object="${account}">
         <div>
             <label for="name">Имя (строка)</label>
             <input th:name="name" type="text" id="name" autofocus>

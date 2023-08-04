@@ -21,24 +21,20 @@ public class TestUserService implements CommandLineRunner {
         Role adminRole = new Role("ROLE_ADMIN");
         Role userRole = new Role("ROLE_USER");
 
-        // ADMIN --- username: petya --- password: pass1
-        User user1 = new User("Петя", 16, 8.8, "petya", "pass1");
-        user1.setRoles(Collections.singleton(adminRole));
+        // ADMIN --- username: petya@email.com --- password: pass1
+        User user1 = new User("Петя", "Петров", 16, "petya@email.com", "pass1", Collections.singleton(adminRole));
         userService.addUser(user1);
 
-        // USER --- username: masha --- password: pass2
-        User user2 = new User("Маша", 20, 9.8, "masha", "pass2");
-        user2.setRoles(Collections.singleton(userRole));
+        // USER --- username: masha@email.com --- password: pass2
+        User user2 = new User("Маша", "Машева", 20, "masha@email.com", "pass2", Collections.singleton(userRole));
         userService.addUser(user2);
 
-        // USER --- username: katya --- password: pass3
-        User user3 = new User("Катя", 50, 6.3, "katya", "pass3");
-        user3.setRoles(Set.of(adminRole, userRole));
+        // USER --- username: katya@email.com --- password: pass3
+        User user3 = new User("Катя", "Катина", 50, "katya@email.com", "pass3", Set.of(adminRole, userRole));
         userService.addUser(user3);
 
-        // USER --- username: vasya --- password: pass4
-        User user4 = new User("Вася", 33, 0.3, "vasya", "pass4");
-        user4.setRoles(Collections.singleton(userRole));
+        // USER --- username: vasya@email.com --- password: pass4
+        User user4 = new User("Вася", "Васин", 83, "vasya@email.com", "pass4", Collections.singleton(userRole));
         userService.addUser(user4);
     }
 }

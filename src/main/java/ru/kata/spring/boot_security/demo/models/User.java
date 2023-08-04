@@ -15,11 +15,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private int age;
-    private double skill;
     @Column(unique = true)
-    private String username;
+    private String email;
     private String password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -29,24 +29,13 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(int id, String name, int age, double skill) {
-        this.id = id;
-        this.name = name;
+    public User(String firstName, String lastName, int age, String email, String password, Set<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.age = age;
-        this.skill = skill;
-    }
-
-    public User(String name, int age, double skill, String username, String password) {
-        this.name = name;
-        this.age = age;
-        this.skill = skill;
-        this.username = username;
+        this.email = email;
         this.password = password;
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+        this.roles = roles;
     }
 
     public int getId() {
@@ -57,12 +46,20 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getAge() {
@@ -73,29 +70,34 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public double getSkill() {
-        return skill;
+    public String getEmail() {
+        return email;
     }
 
-    public void setSkill(double skill) {
-        this.skill = skill;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    @Override
+    public String getPassword() {
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
-        return name + ", " + age + " лет --- Мастерство: " + skill + " --- Логин: " + username + " --- Роли: " + roles.toString().replace("[", "").replace("]", "").trim();
+        return String.format("%s %s, %d лет --- %s --- %s", firstName, lastName, age, email, roles.toString().replace("[", "").replace("]", "").trim());
     }
 
     @Override
@@ -104,13 +106,8 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
 
     @Override
@@ -131,9 +128,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
     }
 }

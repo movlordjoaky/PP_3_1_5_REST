@@ -6,9 +6,9 @@
 </head>
 <body>
 <div>
-    <h1><span th:text="${user.getName()}">Имя</span>, приветствуем вас!</h1>
+    <h1><span th:text="${account.getFirstName()}">Имя</span>, приветствуем вас!</h1>
     <div>Ваши данные:</div>
-    <span th:text="${user}">Пользователь</span>
+    <span th:text="${account}">Пользователь</span>
     <div th:replace="logout :: logout"></div>
 </div>
 </body>
