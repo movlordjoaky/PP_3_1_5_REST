@@ -96,12 +96,22 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="roles" class="font-weight-bold mb-0">Role</label>
-                                    <select class="custom-select" id="roles" size="2" multiple th:name="roles">
-                                        <option th:each="role : ${user.getRoles()}" th:value="${role.name}"
-                                                th:selected="${user.roles.contains(role)}"
-                                                th:text="${role.name.replaceFirst('ROLE_', '')}">ROLE_NAME
+                                    <select class="custom-select" id="roles" th:size="${roles.size()}" multiple
+                                            th:name="roles" required>
+                                        <option th:each="role : ${roles}" th:value="${role.getName()}"
+                                                th:selected="${user.roles.contains(role)}" th:text="${role}">
+                                            NAME_OF_ROLE
                                         </option>
                                     </select>
+                                    <!--                                    <select class="custom-select" id="roles" size="2" multiple th:name="roles">-->
+                                    <!--                                        <option value="ADMIN">ADMIN</option>-->
+                                    <!--                                        <option value="COMMON_USER" selected>COMMON_USER</option>-->
+
+                                    <!--                                        <option th:each="role : ${user.getRoles()}" th:value="${role.name}"-->
+                                    <!--                                                th:selected="${user.roles.contains(role)}"-->
+                                    <!--                                                th:text="${role.name.replaceFirst('ROLE_', '')}">ROLE_NAME-->
+                                    <!--                                        </option>-->
+                                    <!--                                    </select>-->
                                 </div>
                             </div>
                         </div>
@@ -159,9 +169,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-bold mb-0">Role</label>
-                                    <select class="custom-select" size="2" multiple th:name="roles" disabled>
+                                    <select class="custom-select" th:size="${user.getRoles().size()}" multiple
+                                            th:name="roles" disabled>
                                         <option th:each="role : ${user.getRoles()}" th:value="${role.name}"
-                                                th:text="${role.name.replaceFirst('ROLE_', '')}">ROLE_NAME
+                                                th:text="${role}">NAME_OF_ROLE
                                         </option>
                                     </select>
                                 </div>
