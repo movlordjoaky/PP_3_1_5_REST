@@ -42,24 +42,11 @@ public class CommonUserController {
         return "add";
     }
 
-    // команда на форме добавления пользователя
-    @PostMapping("/add")
-    public String addUser(@ModelAttribute User user) {
-        userService.addUser(user);
-        return "redirect:/admin";
-    }
-
     @GetMapping(value = "/edit/{id}")
     public String editUserForm(Model model, @PathVariable int id) {
         model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("allRoles", roleService.getAllRoles());
         return "edit";
-    }
-
-    @PatchMapping(value = "/edit-user/{id}")
-    public String editUser(@ModelAttribute User user, @PathVariable int id) {
-        userService.changeUser(user, id);
-        return "redirect:/admin";
     }
 
     @DeleteMapping("/delete/{id}")
