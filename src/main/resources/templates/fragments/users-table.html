@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+</head>
+<body>
+<div th:fragment="users-table" class="border rounded-bottom">
+    <h5 class="px-3 py-2 border-bottom mb-0">All users</h5>
+    <div class="bg-white p-3 rounded-bottom">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.getId()}">Id</td>
+                <td th:text="${user.getFirstName()}">FirstName</td>
+                <td th:text="${user.getLastName()}">LastName</td>
+                <td th:text="${user.getAge()}">Age</td>
+                <td th:text="${user.getEmail()}">Email</td>
+                <td th:text="${user.printRoles()}">ROLES</td>
+                <td>
+                    <button type="button" class="btn btn-info btn-sm"
+                            th:data="${user.getId()}">Edit
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal edit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row justify-content-center m-0">
+                <form class="col-6 text-center">
+                    <div class="form-group">
+                        <label for="id" class="font-weight-bold mb-0">ID</label>
+                        <input type="text" class="form-control form-control-sm" id="id" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName" class="font-weight-bold mb-0">First name</label>
+                        <input type="text" class="form-control form-control-sm" id="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="font-weight-bold mb-0">Last name</label>
+                        <input type="text" class="form-control form-control-sm" id="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="age" class="font-weight-bold mb-0">Age</label>
+                        <input type="text" class="form-control form-control-sm" id="age">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="font-weight-bold mb-0">Email</label>
+                        <input type="email" class="form-control form-control-sm" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="font-weight-bold mb-0">Password</label>
+                        <input type="password" class="form-control form-control-sm" id="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="role" class="font-weight-bold mb-0">Role</label>
+                        <select class="custom-select" id="role" size="2" multiple>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="USER" selected>USER</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row justify-content-center m-0">
+                <form class="col-6 text-center">
+                    <div class="form-group">
+                        <label class="font-weight-bold mb-0">ID</label>
+                        <input type="text" class="form-control form-control-sm" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold mb-0">First name</label>
+                        <input type="text" class="form-control form-control-sm" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold mb-0">Last name</label>
+                        <input type="text" class="form-control form-control-sm" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold mb-0">Age</label>
+                        <input type="text" class="form-control form-control-sm" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold mb-0">Email</label>
+                        <input type="email" class="form-control form-control-sm" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold mb-0">Role</label>
+                        <select class="custom-select" size="2" multiple disabled>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="USER">USER</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

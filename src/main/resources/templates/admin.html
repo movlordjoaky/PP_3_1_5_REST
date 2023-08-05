@@ -1,26 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Список пользователей</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div>-->
-<!--    <h3>Все пользователи</h3>-->
-<!--    <ul>-->
-<!--        <li th:each="user : ${users}">-->
-<!--            <span th:text="${user}">Пользователь</span>-->
-<!--            <a th:href="@{/edit/{id}(id=${user.getId()})}">Изменить</a>-->
-<!--            <form th:method="DELETE" th:action="@{/delete/{id}(id=${user.getId()})}">-->
-<!--                <input type="submit" value="Удалить">-->
-<!--            </form>-->
-<!--        </li>-->
-<!--    </ul>-->
-<!--    <a th:href="@{/add}">Добавить</a>-->
-<!--    <div th:replace="logout :: logout"></div>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="ru">
@@ -31,7 +8,7 @@
     <title>Список пользователей</title>
 </head>
 <body>
-<header class="navbar bg-dark text-light" th:replace="header :: header">
+<header class="navbar bg-dark text-light" th:replace="fragments/header :: header">
     Header
 </header>
 <div class="row min-vh-100 m-auto">
@@ -52,16 +29,29 @@
     <!--    main-->
     <div class="col-10 bg-light px-4 pt-2">
         <h1 class="pb-2">Admin panel</h1>
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" id="usersManageTab" role="tablist">
             <li class="nav-item">
-                <span class="nav-link active">Users table</span>
+                <a class="nav-link active" id="users-table-tab" data-toggle="tab" href="#users-table" role="tab"
+                   aria-controls="users-table"
+                   aria-selected="true">Users table</a>
+                <!--                <span class="nav-link active">Users table</span>-->
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/add}">New user</a>
+                <a class="nav-link" id="new-user-tab" data-toggle="tab" href="#new-user" role="tab"
+                   aria-controls="new-user"
+                   aria-selected="false">New user</a>
+                <!--                <a class="nav-link" th:href="@{/add}">New user</a>-->
             </li>
         </ul>
-        <!--        <div th:replace="users-table :: users-table">Таблица пользователей</div>-->
-        <!--        <div th:replace="new-user :: new-user">Создание нового пользователя</div>-->
+        <div class="tab-content" id="usersManageTabContent">
+            <div class="tab-pane fade show active" id="users-table" role="tabpanel" aria-labelledby="users-table-tab">
+                <div th:replace="fragments/users-table :: users-table">Таблица пользователей</div>
+            </div>
+            <div class="tab-pane fade" id="new-user" role="tabpanel" aria-labelledby="new-user-tab">
+                <div th:replace="fragments/new-user :: new-user">Создание нового пользователя</div>
+            </div>
+        </div>
+
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
