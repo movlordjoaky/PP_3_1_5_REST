@@ -129,4 +129,15 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public String printRoles() {
+        return roles.toString().replace("[", "").replace("]", "").replaceAll(",", " ").trim();
+    }
+
+    public boolean hasRole(String roleName) {
+        if (roles.contains(new Role(roleName))) {
+            return true;
+        }
+        return false;
+    }
 }

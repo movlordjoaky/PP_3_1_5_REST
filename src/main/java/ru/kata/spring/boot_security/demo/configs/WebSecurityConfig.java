@@ -31,15 +31,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin", "/add", "/edit/*").hasRole("ADMIN")
-                .antMatchers("/user/*").hasAnyRole("ADMIN", "USER")
+                // проверить нужность /admin
+                .antMatchers("/admin/*", "/add", "/edit/*").hasRole("ADMIN")
+                .antMatchers("/user/*").hasAnyRole("ADMIN", "COMMON_USER")
                 .antMatchers("/", "/index").permitAll()
-                .anyRequest().authenticated() // ???
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .successHandler(successUserHandler).permitAll() // ???
+                .successHandler(successUserHandler).permitAll()
                 .and()
-                .logout().permitAll(); // ???
+                .logout().permitAll();
     }
 
     @Bean

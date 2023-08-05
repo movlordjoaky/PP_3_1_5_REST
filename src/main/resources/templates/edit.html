@@ -5,34 +5,34 @@
     <title>Изменить пользователя</title>
 </head>
 <body>
-<h3 th:text="'Изменение пользователя ' + ${account.firstName}"></h3>
+<h3 th:text="'Изменение пользователя ' + ${user.firstName}"></h3>
 <div>
-    <form th:method="PATCH" th:action="@{/edit-account/{id}(id=${account.getId()})}" th:object="${account}">
+    <form th:method="PATCH" th:action="@{/edit-user/{id}(id=${user.getId()})}" th:object="${user}">
         <div>
             <label for="name">Имя (строка)</label>
-            <input type="text" id="name" th:field="*{firstName}" th:value="${account.getFirstName()}" autofocus>
+            <input type="text" id="name" th:field="*{firstName}" th:value="${user.getFirstName()}" autofocus>
         </div>
         <div>
             <label for="age">Возраст (целое число)</label>
-            <input name="age" type="text" id="age" th:value="${account.getAge()}">
+            <input name="age" type="text" id="age" th:value="${user.getAge()}">
         </div>
         <div>
             <label for="skill">Мастерство (вещественное число)</label>
-            <input name="skill" type="text" id="skill" th:value="${account.getSkill()}">
+            <input name="skill" type="text" id="skill" th:value="${user.getSkill()}">
         </div>
         <div>
             <label for="username">Логин</label>
-            <input name="username" type="text" id="username" th:value="${account.getUsername()}" required>
+            <input name="username" type="text" id="username" th:value="${user.getUsername()}" required>
         </div>
         <div>
             <label for="password">Пароль</label>
-            <input name="password" type="password" id="password" th:value="${account.getPassword()}" required>
+            <input name="password" type="password" id="password" th:value="${user.getPassword()}" required>
         </div>
         <div>
             <label for="roles">Роли</label>
             <select th:name="roles" id="roles" multiple required>
                 <option th:each="role : ${allRoles}" th:value="${role.name}"
-                        th:selected="${account.roles.contains(role)}"
+                        th:selected="${user.roles.contains(role)}"
                         th:text="${role.name.replaceFirst('ROLE_', '')}">ROLE_NAME
                 </option>
             </select>

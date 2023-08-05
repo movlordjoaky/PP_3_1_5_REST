@@ -11,8 +11,8 @@
 <div class="d-flex justify-content-center">
     <div class="w-25 p-3">
         <h4 class="mt-4 mb-3"><strong>Please sign in</strong></h4>
-        <!--/*@thymesVar id="account" type="ru.kata.spring.boot_security.demo.model.User"*/-->
-        <form method="POST" th:action="@{/login}" th:object="${account}">
+        <!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.model.User"*/-->
+        <form method="POST" th:action="@{/login}" th:object="${user}">
             <div class="mb-2">
                 <input class="form-control" name="username" type="email" id="username" autofocus
                        placeholder="Email address">

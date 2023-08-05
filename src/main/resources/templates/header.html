@@ -8,13 +8,13 @@
 </head>
 <body>
 <header th:fragment="header" class="navbar bg-dark text-light d-flex justify-content-between">
-    <!--/*@thymesVar id="account" type="ru.kata.spring.boot_security.demo.model.User"*/-->
+    <!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.model.User"*/-->
     <div>
-    <span class="font-weight-bold" th:text="${account.getFirstName()}">
+    <span class="font-weight-bold" th:text="${user.getEmail()}">
         Email пользователя
     </span>
         with roles:
-        <span th:text="${account.getRoles()}">РОЛИ</span>
+        <span th:text="${user.printRoles()}">РОЛИ</span>
     </div>
     <a class="float-right text-muted" href="/logout">Выйти</a>
 </header>

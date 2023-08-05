@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 @Entity
 public class Role implements GrantedAuthority {
@@ -46,6 +47,10 @@ public class Role implements GrantedAuthority {
     @Override
     public String toString() {
         return name.replaceFirst("ROLE_", "");
+    }
+
+    public String toStringLowerCase() {
+        return Pattern.compile("^.").matcher(toString().toLowerCase().replaceAll("_", " ")).replaceFirst(m -> m.group().toUpperCase());
     }
 
     @Override

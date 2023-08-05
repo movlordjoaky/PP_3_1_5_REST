@@ -8,10 +8,10 @@
 <!--<div>-->
 <!--    <h3>Все пользователи</h3>-->
 <!--    <ul>-->
-<!--        <li th:each="account : ${accounts}">-->
-<!--            <span th:text="${account}">Пользователь</span>-->
-<!--            <a th:href="@{/edit/{id}(id=${account.getId()})}">Изменить</a>-->
-<!--            <form th:method="DELETE" th:action="@{/delete/{id}(id=${account.getId()})}">-->
+<!--        <li th:each="user : ${users}">-->
+<!--            <span th:text="${user}">Пользователь</span>-->
+<!--            <a th:href="@{/edit/{id}(id=${user.getId()})}">Изменить</a>-->
+<!--            <form th:method="DELETE" th:action="@{/delete/{id}(id=${user.getId()})}">-->
 <!--                <input type="submit" value="Удалить">-->
 <!--            </form>-->
 <!--        </li>-->
@@ -37,13 +37,14 @@
 <div class="row min-vh-100 m-auto">
     <!--    sidebar-->
     <div class="col-2 px-0 bg-white">
-        <nav class="sidebar  py-3">
+        <nav class="sidebar py-3">
             <div class="d-flex flex-column">
-                <div class="bg-primary text-truncate px-3 py-1 rounded-sm">
-                    <a href="#" class="text-light">Admin</a>
+                <div class="text-truncate px-3 py-1 rounded-sm bg-primary">
+                    <span class="text-light">Admin</span>
                 </div>
-                <div class="text-truncate px-3 py-1 rounded-sm">
-                    <a href="#" class="text-primary">User</a>
+                <div th:if="${user.hasRole('ROLE_COMMON_USER')}"
+                     class="text-truncate px-3 py-1 rounded-sm">
+                    <a th:href="'/user/' + ${user.getId()}" class="text-primary">User</a>
                 </div>
             </div>
         </nav>
@@ -53,14 +54,14 @@
         <h1 class="pb-2">Admin panel</h1>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Users table</a>
+                <span class="nav-link active">Users table</span>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/add}">New account</a>
+                <a class="nav-link" th:href="@{/add}">New user</a>
             </li>
         </ul>
-        <!--        <div th:replace="accounts-table :: accounts-table">Таблица пользователей</div>-->
-        <!--        <div th:replace="new-account :: new-account">Создание нового пользователя</div>-->
+        <!--        <div th:replace="users-table :: users-table">Таблица пользователей</div>-->
+        <!--        <div th:replace="new-user :: new-user">Создание нового пользователя</div>-->
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

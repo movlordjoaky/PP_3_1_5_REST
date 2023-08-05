@@ -8,15 +8,25 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
-public class UserController {
+public class CommonUserController {
     private final UserService userService;
     private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService) {
+    public CommonUserController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
+    }
+
+    // вывод обычного пользователя
+    @GetMapping(value = "/user/{id}")
+    public String printUser(HttpServletRequest request, Model model, @PathVariable int id) {
+//        model.addAttribute("request", request);
+        model.addAttribute("user", userService.getUserById(id));
+        return "common-user";
     }
 
     // вывод всех пользователей
@@ -56,12 +66,5 @@ public class UserController {
     public String deleteUser(@PathVariable int id) {
         userService.deleteUserById(id);
         return "redirect:/admin";
-    }
-
-    // вывод пользователя
-    @GetMapping(value = "/user/{id}")
-    public String printUser(Model model, @PathVariable int id) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "user";
     }
 }
