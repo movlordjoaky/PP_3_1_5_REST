@@ -14,7 +14,7 @@
         <!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.model.User"*/-->
         <form method="POST" th:action="@{/login}" th:object="${user}">
             <div class="mb-2">
-                <input class="form-control" name="username" type="email" id="username" autofocus
+                <input class="form-control" name="username" type="email" id="username" autofocus required
                        placeholder="Email address">
                 <input class="form-control" name="password" type="password" id="password" required
                        placeholder="Password">

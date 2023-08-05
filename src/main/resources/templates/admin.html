@@ -21,7 +21,8 @@
                 </div>
                 <div th:if="${user.hasRole('ROLE_COMMON_USER')}"
                      class="text-truncate px-3 py-1 rounded-sm">
-                    <a th:href="'/user/' + ${user.getId()}" class="text-primary">User</a>
+                    <!--                    <a th:href="'/user/' + ${user.getId()}" class="text-primary">User</a>-->
+                    <a href="/user" class="text-primary">User</a>
                 </div>
             </div>
         </nav>

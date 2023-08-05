@@ -9,6 +9,7 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class CommonUserController {
@@ -22,18 +23,16 @@ public class CommonUserController {
     }
 
     // вывод обычного пользователя
-    @GetMapping(value = "/user/{id}")
-    public String printUser(HttpServletRequest request, Model model, @PathVariable int id) {
+//    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = "/user")
+//    public String printUser(HttpServletRequest request, Model model, @PathVariable int id) {
+    public String printUser(HttpServletRequest request, Model model) {
 //        model.addAttribute("request", request);
-        model.addAttribute("user", userService.getUserById(id));
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+//        model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("user", user);
         return "common-user";
-    }
-
-    // вывод всех пользователей
-    @GetMapping(value = "/admin")
-    public String printUsers(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "admin";
     }
 
     // страница добавления пользователя
