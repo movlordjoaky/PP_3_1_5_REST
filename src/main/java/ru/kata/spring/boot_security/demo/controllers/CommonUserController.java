@@ -48,10 +48,4 @@ public class CommonUserController {
         model.addAttribute("allRoles", roleService.getAllRoles());
         return "edit";
     }
-
-    @DeleteMapping("/delete/{id}")
-    public String deleteUser(@PathVariable int id) {
-        userService.deleteUserById(id);
-        return "redirect:/admin";
-    }
 }
