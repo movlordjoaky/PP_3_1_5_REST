@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 @Entity
 public class Role implements GrantedAuthority {
