@@ -49,10 +49,6 @@ public class Role implements GrantedAuthority {
         return name.replaceFirst("ROLE_", "");
     }
 
-    public String toStringLowerCase() {
-        return Pattern.compile("^.").matcher(toString().toLowerCase().replaceAll("_", " ")).replaceFirst(m -> m.group().toUpperCase());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

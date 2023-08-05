@@ -22,21 +22,12 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    // вывод всех пользователей
-//    @GetMapping(value = "/admin")
-//    public String printUsers(Model model) {
-//        model.addAttribute("users", userService.getAllUsers());
-//        return "admin";
-//    }
-//
     // вывод админа
-//    @GetMapping(value = "/admin/{id}")
     @GetMapping(value = "/admin")
     public String printUser(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
-//        model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("roles", roleService.getAllRoles());
         return "admin";
@@ -60,11 +51,4 @@ public class AdminController {
         userService.deleteUserById(id);
         return "redirect:/admin";
     }
-    // вывод всех пользователей
-//    @GetMapping(value = "/admin")
-//    public String printUsers(Model model) {
-//        model.addAttribute("user",userService.get)
-//        model.addAttribute("users", userService.getAllUsers());
-//        return "admin";
-//    }
 }

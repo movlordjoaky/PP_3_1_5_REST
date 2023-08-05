@@ -24,14 +24,11 @@ public class SuccessUserHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         User user = (User) authentication.getPrincipal();
-//        int userId = user.getId();
         HttpSession session = httpServletRequest.getSession();
         session.setAttribute("user", user);
         if (roles.contains(UserRole.ADMIN)) {
             httpServletResponse.sendRedirect("/admin");
-//            httpServletResponse.sendRedirect("/admin/" + userId);
         } else if (roles.contains(UserRole.COMMON_USER)) {
-//            httpServletResponse.sendRedirect("/user/" + userId);
             httpServletResponse.sendRedirect("/user");
         } else {
             httpServletResponse.sendRedirect("/");

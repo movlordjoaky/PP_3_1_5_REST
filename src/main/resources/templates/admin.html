@@ -21,7 +21,6 @@
                 </div>
                 <div th:if="${user.hasRole('ROLE_COMMON_USER')}"
                      class="text-truncate px-3 py-1 rounded-sm">
-                    <!--                    <a th:href="'/user/' + ${user.getId()}" class="text-primary">User</a>-->
                     <a href="/user" class="text-primary">User</a>
                 </div>
             </div>
@@ -35,13 +34,11 @@
                 <a class="nav-link active" id="users-table-tab" data-toggle="tab" href="#users-table" role="tab"
                    aria-controls="users-table"
                    aria-selected="true">Users table</a>
-                <!--                <span class="nav-link active">Users table</span>-->
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="new-user-tab" data-toggle="tab" href="#new-user" role="tab"
                    aria-controls="new-user"
                    aria-selected="false">New user</a>
-                <!--                <a class="nav-link" th:href="@{/add}">New user</a>-->
             </li>
         </ul>
         <div class="tab-content" id="usersManageTabContent">
