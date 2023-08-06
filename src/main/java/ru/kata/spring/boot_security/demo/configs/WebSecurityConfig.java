@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.configs;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String[] staticResources = {
+                "/static/js/*", "*.js"
+        };
         http
                 .cors().disable()
                 .csrf().disable()
@@ -34,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("COMMON_USER")
                 .antMatchers("/", "/index").permitAll()
+                .antMatchers(staticResources).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login")

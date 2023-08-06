@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void addUser(User user) {
-        userDAOImpl.addUser(user);
+    public User addUser(User user) {
+        return userDAOImpl.addUser(user);
     }
 
     @Override

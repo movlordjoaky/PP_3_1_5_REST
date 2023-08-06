@@ -23,10 +23,13 @@ public class CommonUserController {
     }
 
     // вывод обычного пользователя
+//    @ResponseBody
     @GetMapping(value = "/user")
-    public String printUser(HttpServletRequest request, Model model) {
+    public String getUser(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        String contentType = request.getContentType();
+        System.out.println("Content-Type: " + contentType);
         model.addAttribute("user", user);
         return "common-user";
     }

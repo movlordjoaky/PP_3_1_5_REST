@@ -25,39 +25,52 @@
                     <div class="row justify-content-center m-0">
                         <div class="modal-body col-6 text-center">
                             <div class="form-group">
-                                <label for="id" class="font-weight-bold mb-0">ID</label>
-                                <input type="text" class="form-control form-control-sm" id="id" disabled
+                                <label th:for="'editModal-id-' + ${user.getId()}"
+                                       class="font-weight-bold mb-0">ID</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       th:id="'editModal-id-' + ${user.getId()}" disabled
                                        th:name="id" th:value="${user.getId()}">
                             </div>
                             <div class="form-group">
-                                <label for="firstName" class="font-weight-bold mb-0">First name</label>
-                                <input type="text" class="form-control form-control-sm" id="firstName"
+                                <label th:for="'editModal-firstName-' + ${user.getId()}" class="font-weight-bold mb-0">First
+                                    name</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       th:id="'editModal-firstName-' + ${user.getId()}"
                                        th:name="firstName" th:value="${user.getFirstName()}" autofocus>
                             </div>
                             <div class="form-group">
-                                <label for="lastName" class="font-weight-bold mb-0">Last name</label>
-                                <input type="text" class="form-control form-control-sm" id="lastName"
+                                <label th:for="'editModal-lastName-' + ${user.getId()}" class="font-weight-bold mb-0">Last
+                                    name</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       th:id="'editModal-lastName-' + ${user.getId()}"
                                        th:name="lastName" th:value="${user.getLastName()}">
                             </div>
                             <div class="form-group">
-                                <label for="age" class="font-weight-bold mb-0">Age</label>
-                                <input type="text" class="form-control form-control-sm" id="age" th:name="age"
+                                <label th:for="'editModal-age-' + ${user.getId()}"
+                                       class="font-weight-bold mb-0">Age</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       th:id="'editModal-age-' + ${user.getId()}" th:name="age"
                                        th:value="${user.getAge()}">
                             </div>
                             <div class="form-group">
-                                <label for="email" class="font-weight-bold mb-0">Email</label>
-                                <input type="email" class="form-control form-control-sm" id="email"
+                                <label th:for="'editModal-email-' + ${user.getId()}"
+                                       class="font-weight-bold mb-0">Email</label>
+                                <input type="email" class="form-control form-control-sm"
+                                       th:id="'editModal-email-' + ${user.getId()}"
                                        th:name="email"
                                        th:value="${user.getEmail()}">
                             </div>
                             <div class="form-group">
-                                <label for="password" class="font-weight-bold mb-0">Password</label>
-                                <input type="password" class="form-control form-control-sm" id="password"
+                                <label th:for="'editModal-password-' + ${user.getId()}" class="font-weight-bold mb-0">Password</label>
+                                <input type="password" class="form-control form-control-sm"
+                                       th:id="'editModal-password-' + ${user.getId()}"
                                        th:name="password" th:value="${user.getPassword()}">
                             </div>
                             <div class="form-group">
-                                <label for="roles" class="font-weight-bold mb-0">Role</label>
-                                <select class="custom-select" id="roles" th:size="${roles.size()}" multiple
+                                <label th:for="'editModal-roles-' + ${user.getId()}"
+                                       class="font-weight-bold mb-0">Role</label>
+                                <select class="custom-select" th:id="'editModal-roles-' + ${user.getId()}"
+                                        th:size="${roles.size()}" multiple
                                         th:name="roles" required>
                                     <option th:each="role : ${roles}" th:value="${role.getName()}"
                                             th:selected="${user.roles.contains(role)}" th:text="${role}">

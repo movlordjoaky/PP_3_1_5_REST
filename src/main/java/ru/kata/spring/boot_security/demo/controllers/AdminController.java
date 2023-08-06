@@ -34,10 +34,11 @@ public class AdminController {
     }
 
     // команда на форме добавления пользователя
+    @ResponseBody
     @PostMapping("/create")
-    public String createUser(@ModelAttribute User user) {
-        userService.addUser(user);
-        return "redirect:/admin";
+    public User createUser(@RequestBody User user) {
+        System.out.println(user);
+        return userService.addUser(user);
     }
 
     @PatchMapping(value = "/edit-user/{id}")

@@ -9,7 +9,7 @@ public interface UserDAO {
 
     User getUserById(int id);
 
-    void addUser(User user);
+    User addUser(User user);
 
     void changeUser(User newUser, int id);
 

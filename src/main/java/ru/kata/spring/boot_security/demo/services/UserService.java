@@ -12,7 +12,7 @@ public interface UserService extends UserDetailsService {
     User getUserById(int id);
 
     @Transactional
-    void addUser(User user);
+    User addUser(User user);
 
     @Transactional
     void changeUser(User newUser, int id);

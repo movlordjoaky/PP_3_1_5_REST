@@ -43,11 +43,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void addUser(User user) {
+    public User addUser(User user) {
         Set<Role> updatedRoles = getRoleNamesFromRoles(user);
         updatedRoles.addAll(user.getRoles());
         user.setRoles(updatedRoles);
         entityManager.persist(user);
+        return user;
     }
 
     @Override
