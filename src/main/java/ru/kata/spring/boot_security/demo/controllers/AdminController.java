@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 import ru.kata.spring.boot_security.demo.services.RoleService;
@@ -34,17 +35,22 @@ public class AdminController {
     }
 
     // команда на форме добавления пользователя
+    @PostMapping("/api/users")
     @ResponseBody
-    @PostMapping("/create")
     public User createUser(@RequestBody User user) {
         System.out.println(user);
-        return userService.addUser(user);
+        User newUser = userService.addUser(user);
+        newUser.setPassword("");
+        return newUser;
     }
 
-    @PatchMapping(value = "/edit-user/{id}")
-    public String editUser(@ModelAttribute User user, @PathVariable int id) {
-        userService.changeUser(user, id);
-        return "redirect:/admin";
+    @PatchMapping("/api/users")
+    @ResponseBody
+    public User editUser(@RequestBody User user) {
+        System.out.println("PatchMapping1234");
+        User newUser = userService.changeUser(user);
+        System.out.println(newUser);
+        return newUser;
     }
 
     @DeleteMapping("/delete-user/{id}")

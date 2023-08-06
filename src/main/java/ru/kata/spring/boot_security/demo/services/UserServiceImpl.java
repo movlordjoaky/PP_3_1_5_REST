@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void changeUser(User newUser, int id) {
-        userDAOImpl.changeUser(newUser, id);
+    public User changeUser(User newUser) {
+        return userDAOImpl.changeUser(newUser);
     }
 
     @Override

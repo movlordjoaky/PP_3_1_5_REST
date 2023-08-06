@@ -21,7 +21,6 @@ public class User implements UserDetails {
     private int age;
     @Column(unique = true)
     private String email;
-    @JsonIgnore
     private String password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -99,7 +98,7 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return String.format("%s %s, %d лет --- %s --- %s", firstName, lastName, age, email, roles.toString().replace("[", "").replace("]", "").trim());
+        return String.format("%d %s %s, %d лет --- %s %s --- %s", id, firstName, lastName, age, email, password, roles.toString().replace("[", "").replace("]", "").trim());
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface UserService extends UserDetailsService {
     User addUser(User user);
 
     @Transactional
-    void changeUser(User newUser, int id);
+    User changeUser(User newUser);
 
     @Transactional
     void deleteUserById(int id);

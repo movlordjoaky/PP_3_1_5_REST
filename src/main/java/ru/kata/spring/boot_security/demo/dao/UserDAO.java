@@ -11,7 +11,7 @@ public interface UserDAO {
 
     User addUser(User user);
 
-    void changeUser(User newUser, int id);
+    User changeUser(User newUser);
 
     void deleteUserById(int id);
 
