@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class AdminController {
 
     // вывод админа
     @GetMapping(value = "/admin")
-    public String printUser(HttpServletRequest request, Model model) {
+    public String readUser(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
@@ -53,9 +54,10 @@ public class AdminController {
         return newUser;
     }
 
-    @DeleteMapping("/delete-user/{id}")
-    public String deleteUser(@PathVariable int id) {
+    @DeleteMapping("/api/users/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteUser(@PathVariable int id) {
         userService.deleteUserById(id);
-        return "redirect:/admin";
+        return ResponseEntity.ok().build();
     }
 }

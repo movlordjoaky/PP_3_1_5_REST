@@ -8,8 +8,7 @@
 </head>
 <body>
 <div th:fragment="user-edit">
-    <form class="row justify-content-center m-0" th:method="PATCH" th:object="${user}"
-          id="edit-form">
+    <form class="row justify-content-center m-0" id="edit-form">
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
              aria-labelledby="editModalLabel"
              aria-hidden="true">
@@ -26,43 +25,44 @@
                             <div class="form-group">
                                 <label for="editmodal-id" class="font-weight-bold mb-0">ID</label>
                                 <input type="text" class="form-control form-control-sm"
-                                       id="editmodal-id" readonly th:name="id">
+                                       id="editmodal-id" readonly name="id">
                             </div>
                             <div class="form-group">
                                 <label for="editmodal-firstname" class="font-weight-bold mb-0">First
                                     name</label>
                                 <input type="text" class="form-control form-control-sm"
                                        id="editmodal-firstname"
-                                       th:name="firstName" autofocus>
+                                       name="firstName" autofocus>
                             </div>
                             <div class="form-group">
                                 <label for="editmodal-lastName" class="font-weight-bold mb-0">Last
                                     name</label>
                                 <input type="text" class="form-control form-control-sm"
                                        id="editmodal-lastName"
-                                       th:name="lastName">
+                                       name="lastName">
                             </div>
+                            <!--                            input со стрелками-->
                             <div class="form-group">
                                 <label for="editmodal-age"
                                        class="font-weight-bold mb-0">Age</label>
                                 <input type="text" class="form-control form-control-sm"
-                                       id="editmodal-age" th:name="age">
+                                       id="editmodal-age" name="age">
                             </div>
                             <div class="form-group">
                                 <label for="editmodal-email"
                                        class="font-weight-bold mb-0">Email</label>
                                 <input type="email" class="form-control form-control-sm"
-                                       id="editmodal-email" th:name="email" required>
+                                       id="editmodal-email" name="email" required>
                             </div>
                             <div class="form-group">
                                 <label for="editmodal-password" class="font-weight-bold mb-0">Password</label>
                                 <input type="password" class="form-control form-control-sm"
-                                       id="editmodal-password" th:name="password" required>
+                                       id="editmodal-password" name="password" required>
                             </div>
                             <div class="form-group">
                                 <label for="editmodal-roles" class="font-weight-bold mb-0">Role</label>
                                 <select class="custom-select" id="editmodal-roles" th:size="${roles.size()}" multiple
-                                        th:name="roles" required>
+                                        name="roles" required>
                                     <option th:each="role : ${roles}" th:value="${role.getName()}" th:text="${role}">
                                         NAME_OF_ROLE
                                     </option>

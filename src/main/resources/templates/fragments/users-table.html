@@ -25,21 +25,20 @@
             </thead>
             <tbody>
             <tr th:each="user : ${users}">
-                <td th:text="${user.getId()}" data-field="id">Id</td>
-                <td th:text="${user.getFirstName()}" data-field="firstname">FirstName</td>
-                <td th:text="${user.getLastName()}" data-field="lastname">LastName</td>
-                <td th:text="${user.getAge()}" data-field="age">Age</td>
-                <td th:text="${user.getEmail()}" data-field="email">Email</td>
-                <td th:text="${user.printRoles()}" data-field="roles">ROLES</td>
+                <td th:text="${user.getId()}" class="id">Id</td>
+                <td th:text="${user.getFirstName()}" class="firstname">FirstName</td>
+                <td th:text="${user.getLastName()}" class="lastname">LastName</td>
+                <td th:text="${user.getAge()}" class="age">Age</td>
+                <td th:text="${user.getEmail()}" class="email">Email</td>
+                <td th:text="${user.printRoles()}" class="roles">ROLES</td>
                 <td>
-                    <button th:id="'edit-modal-open-' + ${user.getId()}" type="button" class="btn btn-info btn-sm"
-                            data-toggle="modal"
-                            data-target="#editModal">Edit
+                    <button type="button" class="btn btn-info btn-sm"
+                            data-toggle="modal" data-target="#editModal">Edit
                     </button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                            th:data-target="'#deleteModal-' + ${user.getId()}">Delete
+                            data-target="#deleteModal">Delete
                     </button>
                 </td>
             </tr>
