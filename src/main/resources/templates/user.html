@@ -10,8 +10,15 @@
 </head>
 <body>
 <div>
-    <header class="navbar bg-dark text-light" th:replace="fragments/header :: header">
-        Header
+    <header th:fragment="header" class="navbar bg-dark text-light d-flex justify-content-between">
+        <div>
+    <span class="font-weight-bold email" th:text="${user.getEmail()}">
+        Email пользователя
+    </span>
+            with roles:
+            <span th:text="${user.printRoles()}" class="roles">РОЛИ</span>
+        </div>
+        <a id="logout" class="float-right text-muted" href="/logout-custom" style="">Logout</a>
     </header>
     <div class="row min-vh-100 m-auto">
         <!--        sidebar-->
