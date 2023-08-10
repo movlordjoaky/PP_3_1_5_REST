@@ -8,7 +8,7 @@
 </head>
 <body>
 <div th:fragment="user-delete">
-    <form class="row justify-content-center m-0" id="delete-form">
+    <form class="row justify-content-center m-0" id="delete-user-form">
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
              aria-labelledby="deleteModalLabel"
              aria-hidden="true">
@@ -24,29 +24,29 @@
                         <div class="modal-body col-6 text-center">
                             <div class="form-group">
                                 <label class="font-weight-bold mb-0">ID</label>
-                                <input type="text" class="form-control form-control-sm" readonly
+                                <input type="text" class="form-control form-control-sm" disabled
                                        name="id">
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold mb-0">First name</label>
-                                <input type="text" class="form-control form-control-sm" name="firstName" readonly>
+                                <input type="text" class="form-control form-control-sm" name="firstName" disabled>
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold mb-0">Last name</label>
-                                <input type="text" class="form-control form-control-sm" name="lastName" readonly>
+                                <input type="text" class="form-control form-control-sm" name="lastName" disabled>
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold mb-0">Age</label>
-                                <input type="text" class="form-control form-control-sm" name="age" readonly>
+                                <input type="text" class="form-control form-control-sm" name="age" disabled>
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold mb-0">Email</label>
-                                <input type="email" class="form-control form-control-sm" name="email" readonly>
+                                <input type="email" class="form-control form-control-sm" name="email" disabled>
                             </div>
                             <div class="form-group">
                                 <label class="font-weight-bold mb-0">Role</label>
                                 <select class="custom-select" multiple name="roles"
-                                        readonly>
+                                        disabled>
                                 </select>
                             </div>
                         </div>

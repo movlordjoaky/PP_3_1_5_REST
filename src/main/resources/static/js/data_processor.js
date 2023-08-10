@@ -22,6 +22,7 @@ function processLoginForm() {
         processCommonUserLink()
         processNewUserForm()
         processUsersTable()
+        // processEditUserForm()
         processLogout()
     })
 }
@@ -69,31 +70,27 @@ function processCommonUserLink() {
 }
 
 function processNewUserForm() {
-    $(document).on('submit', '#new-user-form', tryNewUser)
-    console.log('processNewUserForm')
-}
-
-async function tryNewUser(newUserFormEvent) {
-    newUserFormEvent.preventDefault();
-    console.log('tryNewUser');
-    const usersTable = $('#users-table');
-    const usersTableTab = $('#users-table-tab-link');
-    const newUserForm = newUserFormEvent.target
-    const jsonData = getJsonFromForm(newUserForm);
-    console.log(jsonData);
-    let response = await fetch('/api/users', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(jsonData)
-    });
-    console.log(response);
-    if (response.ok) {
-        const newAddedUser = await response.json();
-        const rolesString = newAddedUser.roles.map(role => role.name.replace('ROLE_', '')).join(' ');
-        const newAddedUserRow = $('<tr></tr>');
-        newAddedUserRow.html(`<td class="id">${newAddedUser.id}</td>
+    $(document).on('submit', '#new-user-form', async (newUserFormEvent) => {
+        newUserFormEvent.preventDefault();
+        console.log('tryNewUser');
+        const usersTable = $('#users-table');
+        const usersTableTab = $('#users-table-tab-link');
+        const newUserForm = newUserFormEvent.target
+        const jsonData = getJsonFromForm(newUserForm);
+        console.log(jsonData);
+        let response = await fetch('/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(jsonData)
+        });
+        console.log(response);
+        if (response.ok) {
+            const newAddedUser = await response.json();
+            const rolesString = newAddedUser.roles.map(role => role.name).join(' ');
+            const newAddedUserRow = $('<tr></tr>');
+            newAddedUserRow.html(`<td class="id">${newAddedUser.id}</td>
 <td class="firstname">${newAddedUser.firstName}</td>
 <td class="lastname">${newAddedUser.lastName}</td>
 <td class="age">${newAddedUser.age}</td>
@@ -101,35 +98,68 @@ async function tryNewUser(newUserFormEvent) {
 <td class="roles">${rolesString}</td>
 <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editModal">Edit</button></td>
 <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Delete</button></td>`);
-        usersTable.append(newAddedUserRow);
-        usersTableTab.click();
-        console.log(newAddedUser);
-    } else {
-        throw new Error('Request failed with status: ' + response.status);
-    }
+            usersTable.append(newAddedUserRow);
+            usersTableTab.click();
+            console.log(newAddedUser);
+        } else {
+            throw new Error('Request failed with status: ' + response.status);
+        }
+    })
+    console.log('processNewUserForm')
 }
 
 function processUsersTable() {
-    $(document).on('click', '#users-table', (clickEvent) => {
-        if ($(clickEvent.target).is('[data-target="#editModal"]')) {
-            editUser(clickEvent);
-        } else if ($(clickEvent.target).is('[data-target="#deleteModal"]')) {
-            deleteUser(clickEvent);
+    $(document).on('click', '#users-table', (usersTableEvent) => {
+        if ($(usersTableEvent.target).is('[data-target="#editModal"]')) {
+            fillEditUserForm(usersTableEvent);
+        } else if ($(usersTableEvent.target).is('[data-target="#deleteModal"]')) {
+            fillDeleteUserForm(usersTableEvent);
         }
     })
 }
 
-let oldFirstName, oldLastName, oldAge, oldEmail, oldRoleNames;
-const editUserForm = $('#edit-form');
-const editFormButtonClose = editUserForm.find('button.close');
-const deleteUserForm = $('#delete-form');
-const deleteFormButtonClose = deleteUserForm.find('button.close');
+function fillEditUserForm(usersTableEvent) {
+    const editUserForm = $('#edit-user-form');
+    const userRow = $(usersTableEvent.target).closest('tr');
+
+    const id = userRow.find('.id').text();
+    const editIdField = editUserForm.find('[name="id"]');
+    const editFirstNameField = editUserForm.find('[name="firstName"]');
+    const editLastNameField = editUserForm.find('[name="lastName"]');
+    const editAgeField = editUserForm.find('[name="age"]');
+    const editEmailField = editUserForm.find('[name="email"]');
+    const editPasswordField = editUserForm.find('[name="password"]');
+    const roleOptions = editUserForm.find('[name="roles"] option');
+
+    editIdField.add(editFirstNameField).add(editLastNameField).add(editAgeField).add(editEmailField).add(editPasswordField).val('')
+    roleOptions.prop('selected', false);
+
+    editIdField.val(id);
+    editFirstNameField.val(userRow.find('.firstname').text());
+    editLastNameField.val(userRow.find('.lastname').text());
+    editAgeField.val(userRow.find('.age').text());
+    editEmailField.val(userRow.find('.email').text());
 
 
-function processEditUserForm() {
-    editUserForm.on('submit', async (e) => {
-        e.preventDefault();
+    userRow.find('.roles').text().split(' ').forEach(function (roleName) {
+        roleOptions.each(function () {
+            if ($(this).text() === roleName) {
+                $(this).prop('selected', true);
+            }
+        });
+    });
+    processEditUserForm(userRow)
+}
+
+//
+
+
+function processEditUserForm(userRow) {
+    $(document).on('submit', '#edit-user-form', async (editUserFormEvent) => {
+        editUserFormEvent.preventDefault();
+        const editUserForm = editUserFormEvent.target
         const jsonData = getJsonFromForm(editUserForm);
+        const editUserFormButtonClose = $(editUserForm).find('button.close');
         console.log(jsonData);
         let response = await fetch('/api/users', {
             method: 'PATCH',
@@ -140,18 +170,116 @@ function processEditUserForm() {
         });
         if (response.ok) {
             const editedUser = await response.json();
-            const rolesString = editedUser.roles.map(role => role.name.replace('ROLE_', '')).join(' ');
-            oldFirstName.text(editedUser.firstName);
-            oldLastName.text(editedUser.lastName);
-            oldAge.text(editedUser.age);
-            oldEmail.text(editedUser.email);
-            oldRoleNames.text(rolesString);
+            const rolesString = editedUser.roles.map(role => role.name).join(' ');
+            userRow.find('.firstname').text(editedUser.firstName);
+            userRow.find('.lastname').text(editedUser.lastName);
+            userRow.find('.age').text(editedUser.age);
+            userRow.find('.email').text(editedUser.email);
+            userRow.find('.roles').text(rolesString);
             console.log(editedUser);
-            editFormButtonClose.click();
+            editUserFormButtonClose.click();
         } else {
             throw new Error('Request failed with status: ' + response.status);
         }
     });
+}
+
+function fillDeleteUserForm(usersTableEvent) {
+    const deleteUserForm = $('#delete-user-form');
+    const userRow = $(usersTableEvent.target).closest('tr');
+
+    const id = userRow.find('.id').text();
+    const deleteIdField = deleteUserForm.find('[name="id"]');
+    const deleteFirstNameField = deleteUserForm.find('[name="firstName"]')
+    const deleteLastNameField = deleteUserForm.find('[name="lastName"]')
+    const deleteAgeField = deleteUserForm.find('[name="age"]')
+    const deleteEmailField = deleteUserForm.find('[name="email"]')
+    const deleteRoleField = deleteUserForm.find('[name="roles"]');
+
+    deleteIdField.add(deleteFirstNameField).add(deleteLastNameField).add(deleteAgeField).add(deleteEmailField).val('')
+    deleteRoleField.empty();
+
+    deleteIdField.val(id)
+    deleteFirstNameField.val(userRow.find('.firstname').text());
+    deleteLastNameField.val(userRow.find('.lastname').text());
+    deleteAgeField.val(userRow.find('.age').text());
+    deleteEmailField.val(userRow.find('.email').text());
+
+    const roleNames = userRow.find('.roles').text().split(/\s+/)
+    roleNames.forEach(function (roleName) {
+        const option = $('<option>', {value: roleName, text: roleName});
+        deleteRoleField.append(option);
+    });
+    deleteRoleField.prop('size', roleNames.length)
+    processDeleteUserForm(userRow)
+}
+
+
+function processDeleteUserForm(userRow) {
+    const deleteUserForm = $('#delete-user-form')
+    $(document).on('submit', deleteUserForm, async (deleteUserFormEvent) => {
+        deleteUserFormEvent.preventDefault()
+        // const deleteUserForm = deleteUserFormEvent.target
+        // const formData = new FormData(deleteUserForm)
+        // console.log(deleteUserFormEvent.target.closest('form'))
+        const id = deleteUserForm.find('[name="id"]').val();
+        console.log(id)
+
+        let response = await fetch('/api/users/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        })
+        if (response.ok) {
+            console.log(response)
+            const deleteFormButtonClose = deleteUserForm.find('button.close');
+            deleteFormButtonClose.click()
+            // const rows = usersTable.querySelectorAll('tbody tr')
+            // console.log(rows)
+            userRow.remove()
+            // rows.forEach(row => {
+            //     if (row.querySelector('td.id').innerText === id) {
+            //         row
+            //         return
+            //     }
+            // })
+            // const deletedUser = await response.json();
+            // console.log(deletedUser)
+        } else {
+            throw new Error('Request failed with status: ' + response.status);
+        }
+    })
+
+}
+
+
+function deleteUser(event) {
+    const userRow = event.target.closest('tr')
+    const id = userRow.querySelector('.id').innerText
+    getRowValues(userRow)
+
+    const deleteIdField = deleteUserForm.querySelector('[name="id"]')
+    const deleteFirstNameField = deleteUserForm.querySelector('[name="firstName"]')
+    const deleteLastNameField = deleteUserForm.querySelector('[name="lastName"]')
+    const deleteAgeField = deleteUserForm.querySelector('[name="age"]')
+    const deleteEmailField = deleteUserForm.querySelector('[name="email"]')
+    const deleteRoleField = deleteUserForm.querySelector('[name="roles"]')
+    deleteIdField.value = deleteFirstNameField.value = deleteLastNameField.value = deleteAgeField.value = deleteEmailField.value = ''
+    deleteRoleField.innerHTML = ''
+
+    deleteIdField.value = id
+    deleteFirstNameField.value = oldFirstName.innerText
+    deleteLastNameField.value = oldLastName.innerText
+    deleteAgeField.value = oldAge.innerText
+    deleteEmailField.value = oldEmail.innerText
+    oldRoleNames.innerText.split(' ').forEach(roleName => {
+        const option = document.createElement("option")
+        option.value = roleName
+        option.innerText = roleName
+        deleteRoleField.appendChild(option)
+    })
+    deleteRoleField.size = oldRoleNames.innerText.split(' ').length
 }
 
 function getJsonFromForm(form) {
@@ -174,103 +302,3 @@ function getJsonFromForm(form) {
     console.log(jsonData)
     return jsonData
 }
-
-//
-// function processDeleteUserForm() {
-//     deleteUserForm.addEventListener('submit', async (event) => {
-//         event.preventDefault()
-//         // const formData = new FormData(deleteUserForm)
-//         console.log(event.target.closest('form'))
-//         const id = event.target.closest('form').querySelector('[name="id"]').value
-//         console.log(id)
-//
-//         let response = await fetch('/api/users/' + id, {
-//             method: 'DELETE',
-//             headers: {
-//                 'Content-Type': 'application/json;charset=utf-8'
-//             }
-//         })
-//         if (response.ok) {
-//             console.log(response)
-//             deleteFormButtonClose.click()
-//             const rows = usersTable.querySelectorAll('tbody tr')
-//             console.log(rows)
-//
-//             rows.forEach(row => {
-//                 if (row.querySelector('td.id').innerText === id) {
-//                     row.remove()
-//                     return
-//                 }
-//             })
-//             // const deletedUser = await response.json();
-//             // console.log(deletedUser)
-//         } else {
-//             throw new Error('Request failed with status: ' + response.status);
-//         }
-//     })
-// }
-//
-// function editUser(event) {
-//     const userRow = event.target.closest('tr')
-//     const id = userRow.querySelector('.id').innerText
-//     const editIdField = editUserForm.querySelector('[name="id"]')
-//     const editFirstNameField = editUserForm.querySelector('[name="firstName"]')
-//     const editLastNameField = editUserForm.querySelector('[name="lastName"]')
-//     const editAgeField = editUserForm.querySelector('[name="age"]')
-//     const editEmailField = editUserForm.querySelector('[name="email"]')
-//     const editPasswordField = editUserForm.querySelector('[name="password"]')
-//     const roleOptions = editUserForm.querySelectorAll('[name="roles"] option')
-//     editIdField.value = editFirstNameField.value = editLastNameField.value = editAgeField.value = editEmailField.value = editPasswordField.value = ''
-//     getRowValues(userRow)
-//
-//     editIdField.value = id
-//     editFirstNameField.value = oldFirstName.innerText
-//     editLastNameField.value = oldLastName.innerText
-//     editAgeField.value = oldAge.innerText
-//     editEmailField.value = oldEmail.innerText
-//
-//     roleOptions.forEach(roleOption => {
-//         roleOption.selected = false
-//         oldRoleNames.innerText.split(' ').forEach(roleName => {
-//             if (roleOption.innerText === roleName) {
-//                 roleOption.selected = true
-//             }
-//         })
-//     })
-// }
-//
-// function deleteUser(event) {
-//     const userRow = event.target.closest('tr')
-//     const id = userRow.querySelector('.id').innerText
-//     getRowValues(userRow)
-//
-//     const deleteIdField = deleteUserForm.querySelector('[name="id"]')
-//     const deleteFirstNameField = deleteUserForm.querySelector('[name="firstName"]')
-//     const deleteLastNameField = deleteUserForm.querySelector('[name="lastName"]')
-//     const deleteAgeField = deleteUserForm.querySelector('[name="age"]')
-//     const deleteEmailField = deleteUserForm.querySelector('[name="email"]')
-//     const deleteRoleField = deleteUserForm.querySelector('[name="roles"]')
-//     deleteIdField.value = deleteFirstNameField.value = deleteLastNameField.value = deleteAgeField.value = deleteEmailField.value = ''
-//     deleteRoleField.innerHTML = ''
-//
-//     deleteIdField.value = id
-//     deleteFirstNameField.value = oldFirstName.innerText
-//     deleteLastNameField.value = oldLastName.innerText
-//     deleteAgeField.value = oldAge.innerText
-//     deleteEmailField.value = oldEmail.innerText
-//     oldRoleNames.innerText.split(' ').forEach(roleName => {
-//         const option = document.createElement("option")
-//         option.value = 'ROLE_' + roleName
-//         option.innerText = roleName
-//         deleteRoleField.appendChild(option)
-//     })
-//     deleteRoleField.size = oldRoleNames.innerText.split(' ').length
-// }
-//
-// function getRowValues(row) {
-//     oldFirstName = row.querySelector('.firstname')
-//     oldLastName = row.querySelector('.lastname')
-//     oldAge = row.querySelector('.age')
-//     oldEmail = row.querySelector('.email')
-//     oldRoleNames = row.querySelector('.roles')
-// }

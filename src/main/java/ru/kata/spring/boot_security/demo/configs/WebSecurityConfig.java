@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
     @Bean
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
-        return new GrantedAuthorityDefaults(""); // Remove the ROLE_ prefix
+        return new GrantedAuthorityDefaults("");
     }
 
     @Override
