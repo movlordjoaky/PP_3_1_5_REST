@@ -12,17 +12,15 @@ import java.util.Set;
 @Component
 public class TestUserService implements CommandLineRunner {
     private final UserService userService;
-    private final UserRole userRole;
 
-    public TestUserService(UserServiceImpl userService, UserRole userRole) {
+    public TestUserService(UserServiceImpl userService) {
         this.userService = userService;
-        this.userRole = userRole;
     }
 
     @Override
     public void run(String... args) {
-        Role adminRole = new Role(userRole.ADMIN);
-        Role commonUserRole = new Role(userRole.COMMON_USER);
+        Role adminRole = new Role(UserRole.ADMIN);
+        Role commonUserRole = new Role(UserRole.COMMON_USER);
 
         // ADMIN --- username: petya@email.com --- password: pass1
         User user1 = new User("Петя", "Петров", 16, "petya@email.com", "pass1", Collections.singleton(adminRole));

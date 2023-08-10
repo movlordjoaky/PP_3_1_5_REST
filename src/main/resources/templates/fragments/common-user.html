@@ -1,0 +1,30 @@
+<div th:fragment="main">
+    <h1 class="pb-2">User information-page</h1>
+    <div class="bg-white border rounded">
+        <h5 class="px-3 py-2 border-bottom mb-0 bg-light rounded-top">About user</h5>
+        <div class="p-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${user.getId()}">Id</td>
+                    <td th:text="${user.getFirstName()}">FirstName</td>
+                    <td th:text="${user.getLastName()}">LastName</td>
+                    <td th:text="${user.getAge()}">Age</td>
+                    <td th:text="${user.getEmail()}">Email</td>
+                    <td th:text="${user.printRoles()}">ROLES</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

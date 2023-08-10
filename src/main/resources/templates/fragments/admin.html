@@ -1,0 +1,25 @@
+<div th:fragment="main">
+    <h1 class="pb-2">Admin panel</h1>
+    <ul class="nav nav-tabs" id="users-manage-tab-link" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="users-table-tab-link" data-toggle="tab" href="#users-table-tab"
+               role="tab"
+               aria-controls="users-table-tab"
+               aria-selected="true">Users table</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="new-user-tab" data-toggle="tab" href="#new-user" role="tab"
+               aria-controls="new-user"
+               aria-selected="false">New user</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="users-manage-tab-content">
+        <div class="tab-pane fade show active" id="users-table-tab" role="tabpanel"
+             aria-labelledby="users-table-tab-link">
+            <div th:replace="fragments/users-table :: users-table">Таблица пользователей</div>
+        </div>
+        <div class="tab-pane fade" id="new-user" role="tabpanel" aria-labelledby="new-user-tab">
+            <div th:replace="fragments/new-user :: new-user">Создание нового пользователя</div>
+        </div>
+    </div>
+</div>

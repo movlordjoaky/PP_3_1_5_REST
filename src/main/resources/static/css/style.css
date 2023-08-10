@@ -1,0 +1,14 @@
+#logout:hover {
+    color: white !important;
+    text-decoration: none;
+}
+
+.inactive-sidebar-link {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+}
+
+.sidebar-link:hover {
+    text-decoration: none;
+}

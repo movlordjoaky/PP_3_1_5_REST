@@ -5,24 +5,45 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>Login page</title>
 </head>
 <body>
-<div class="d-flex justify-content-center">
-    <div class="w-25 p-3">
-        <h4 class="mt-4 mb-3"><strong>Please sign in</strong></h4>
-        <!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.model.User"*/-->
-        <form method="POST" th:action="@{/login}" th:object="${user}">
-            <div class="mb-2">
-                <input class="form-control" name="username" type="email" id="username" autofocus required
-                       placeholder="Email address">
-                <input class="form-control" name="password" type="password" id="password" required
-                       placeholder="Password">
-            </div>
-            <button class="btn btn-primary btn-block" type="submit">Sign in</button>
-        </form>
-        <div class="mt-2 text-center text-danger" th:text="${errorMessage}"></div>
+<div id="content">
+    <div class="d-flex justify-content-center">
+        <div class="w-25 p-3">
+            <h4 class="mt-4 mb-3"><strong>Please sign in</strong></h4>
+            <!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.model.User"*/-->
+            <form id="login-form">
+                <div class="mb-2">
+                    <input class="form-control" name="username" type="email" id="username" autofocus required
+                           placeholder="Email address">
+                    <input class="form-control" name="password" type="password" id="password" required
+                           placeholder="Password">
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+            <div class="mt-2 text-center text-danger"></div>
+        </div>
     </div>
 </div>
+<script>
+    if (!window.dataProcessorLoaded) {
+        const scriptElement = document.createElement('script');
+        scriptElement.src = '/js/data_processor.js';
+        document.body.appendChild(scriptElement);
+        window.dataProcessorLoaded = true;
+    }
+</script>
+<!--<script src="/js/data_processor.js"></script>-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>
