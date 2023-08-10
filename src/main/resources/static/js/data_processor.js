@@ -1,14 +1,17 @@
+let currentUser
 processLoginForm()
 
 function processLoginForm() {
     $(document).on('submit', '#login-form', async (loginFormEvent) => {
+        const loginErrorMessage = $('#login-error-message')
+        loginErrorMessage.text('')
         loginFormEvent.preventDefault()
         // console.log('tryLogin');
         const jsonData = {
             username: $('#username').val(),
             password: $('#password').val()
         }
-        // console.log(jsonData)
+        console.log(jsonData)
         const response = await fetch('/login', {
             method: 'POST',
             headers: {
@@ -16,13 +19,20 @@ function processLoginForm() {
             },
             body: JSON.stringify(jsonData)
         })
-        const newHtml = await response.text()
-        $('body').html(newHtml)
+        if (response.ok) {
+            response.json().then(jsonData => {
+                const newHtml = jsonData.html
+                currentUser = jsonData.user
+                console.log(currentUser);
+                $('body').html(newHtml)
+            })
+        } else {
+            loginErrorMessage.text('Неправильное имя пользователя или пароль')
+        }
         processAdminLink()
         processCommonUserLink()
         processNewUserForm()
         processUsersTable()
-        // processEditUserForm()
         processLogout()
     })
 }
@@ -151,9 +161,6 @@ function fillEditUserForm(usersTableEvent) {
     processEditUserForm(userRow)
 }
 
-//
-
-
 function processEditUserForm(userRow) {
     $(document).on('submit', '#edit-user-form', async (editUserFormEvent) => {
         editUserFormEvent.preventDefault();
@@ -219,9 +226,6 @@ function processDeleteUserForm(userRow) {
     const deleteUserForm = $('#delete-user-form')
     $(document).on('submit', deleteUserForm, async (deleteUserFormEvent) => {
         deleteUserFormEvent.preventDefault()
-        // const deleteUserForm = deleteUserFormEvent.target
-        // const formData = new FormData(deleteUserForm)
-        // console.log(deleteUserFormEvent.target.closest('form'))
         const id = deleteUserForm.find('[name="id"]').val();
         console.log(id)
 
@@ -235,51 +239,12 @@ function processDeleteUserForm(userRow) {
             console.log(response)
             const deleteFormButtonClose = deleteUserForm.find('button.close');
             deleteFormButtonClose.click()
-            // const rows = usersTable.querySelectorAll('tbody tr')
-            // console.log(rows)
             userRow.remove()
-            // rows.forEach(row => {
-            //     if (row.querySelector('td.id').innerText === id) {
-            //         row
-            //         return
-            //     }
-            // })
-            // const deletedUser = await response.json();
-            // console.log(deletedUser)
         } else {
             throw new Error('Request failed with status: ' + response.status);
         }
     })
 
-}
-
-
-function deleteUser(event) {
-    const userRow = event.target.closest('tr')
-    const id = userRow.querySelector('.id').innerText
-    getRowValues(userRow)
-
-    const deleteIdField = deleteUserForm.querySelector('[name="id"]')
-    const deleteFirstNameField = deleteUserForm.querySelector('[name="firstName"]')
-    const deleteLastNameField = deleteUserForm.querySelector('[name="lastName"]')
-    const deleteAgeField = deleteUserForm.querySelector('[name="age"]')
-    const deleteEmailField = deleteUserForm.querySelector('[name="email"]')
-    const deleteRoleField = deleteUserForm.querySelector('[name="roles"]')
-    deleteIdField.value = deleteFirstNameField.value = deleteLastNameField.value = deleteAgeField.value = deleteEmailField.value = ''
-    deleteRoleField.innerHTML = ''
-
-    deleteIdField.value = id
-    deleteFirstNameField.value = oldFirstName.innerText
-    deleteLastNameField.value = oldLastName.innerText
-    deleteAgeField.value = oldAge.innerText
-    deleteEmailField.value = oldEmail.innerText
-    oldRoleNames.innerText.split(' ').forEach(roleName => {
-        const option = document.createElement("option")
-        option.value = roleName
-        option.innerText = roleName
-        deleteRoleField.appendChild(option)
-    })
-    deleteRoleField.size = oldRoleNames.innerText.split(' ').length
 }
 
 function getJsonFromForm(form) {

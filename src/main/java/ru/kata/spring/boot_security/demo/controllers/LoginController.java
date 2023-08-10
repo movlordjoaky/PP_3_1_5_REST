@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import ru.kata.spring.boot_security.demo.models.HtmlResponse;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.models.UserRole;
 import ru.kata.spring.boot_security.demo.services.RoleService;
@@ -24,6 +25,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,19 +46,29 @@ public class LoginController {
 
     @PostMapping("/login")
     @ResponseBody
-    public String login(@RequestBody Map<String, String> loginRequest) {
+    public ResponseEntity<HtmlResponse> login(@RequestBody Map<String, String> loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.get("username"), loginRequest.get("password"))
         );
+        HtmlResponse response = new HtmlResponse();
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = (User) authentication.getPrincipal();
         Context context = new Context();
-        context.setVariable("user", user);
-        if (user.hasRole(UserRole.ADMIN)) {
-            context.setVariable("users", userService.getAllUsers());
-            context.setVariable("roles", roleService.getAllRoles());
+        if (user.hasRole(UserRole.ADMIN) || user.hasRole(UserRole.COMMON_USER)) {
+            response.setUser(user);
+            if (user.hasRole(UserRole.COMMON_USER)) {
+                context.setVariable("user", user);
+            }
+            if (user.hasRole(UserRole.ADMIN)) {
+                context.setVariable("users", userService.getAllUsers());
+                context.setVariable("roles", roleService.getAllRoles());
+            }
+            response.setHtml(templateEngine.process("user", context));
+            return ResponseEntity.ok().body(response);
+        } else {
+            response.setHtml(templateEngine.process("index", context));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-        return templateEngine.process("user", context);
     }
 
     @PostMapping("/logout-custom")

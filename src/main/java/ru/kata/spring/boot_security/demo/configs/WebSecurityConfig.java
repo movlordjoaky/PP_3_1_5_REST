@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImpl userService) {
+    public WebSecurityConfig(/*SuccessUserHandler successUserHandler,*/ UserServiceImpl userService) {
 //        this.successUserHandler = successUserHandler;
         this.userDetailsService = userService;
     }
@@ -67,18 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(staticResources).permitAll()
                 .anyRequest().authenticated()
                 .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
-////                .logoutSuccessUrl("/login?logout")
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID")
-//                .and()
                 .formLogin().disable();
-//                .successHandler(successUserHandler).permitAll()
-//                .and()
-//                .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
-//                .logout().logoutUrl("/logout").permitAll();
     }
 
     @Bean
