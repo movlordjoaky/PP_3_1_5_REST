@@ -50,9 +50,9 @@ public class LoginController {
         Context context = new Context();
         if (user.hasRole(UserRole.ADMIN) || user.hasRole(UserRole.COMMON_USER)) {
             response.setUser(user);
-            if (user.hasRole(UserRole.COMMON_USER)) {
-                context.setVariable("user", user);
-            }
+            context.setVariable("user", user);
+//            if (user.hasRole(UserRole.COMMON_USER)) {
+//            }
             if (user.hasRole(UserRole.ADMIN)) {
                 context.setVariable("users", userService.getAllUsers());
                 context.setVariable("roles", roleService.getAllRoles());
