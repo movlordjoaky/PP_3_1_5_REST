@@ -39,7 +39,6 @@ public class AdminController {
     @PostMapping("/api/users")
     @ResponseBody
     public User createUser(@RequestBody User user) {
-        System.out.println(user);
         User newUser = userService.addUser(user);
         newUser.setPassword("");
         return newUser;
@@ -48,9 +47,7 @@ public class AdminController {
     @PatchMapping("/api/users")
     @ResponseBody
     public User editUser(@RequestBody User user) {
-        System.out.println("PatchMapping1234");
         User newUser = userService.changeUser(user);
-        System.out.println(newUser);
         return newUser;
     }
 

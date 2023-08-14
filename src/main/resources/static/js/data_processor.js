@@ -6,12 +6,10 @@ function processLoginForm() {
         const loginErrorMessage = $('#login-error-message')
         loginErrorMessage.text('')
         loginFormEvent.preventDefault()
-        // console.log('tryLogin');
         const jsonData = {
             username: $('#username').val(),
             password: $('#password').val()
         }
-        console.log(jsonData)
         const response = await fetch('/login', {
             method: 'POST',
             headers: {
@@ -23,7 +21,6 @@ function processLoginForm() {
             response.json().then(jsonData => {
                 const newHtml = jsonData.html
                 currentUser = jsonData.user
-                console.log(currentUser);
                 $('body').html(newHtml)
             })
         } else {
@@ -48,7 +45,6 @@ function processLogout() {
 
 function processAdminLink() {
     $(document).on('click', '#admin-link', async (adminLinkEvent) => {
-        console.log('processAdminLink');
         adminLinkEvent.preventDefault();
         const adminLink = $(adminLinkEvent.target);
         if (adminLink.hasClass('inactive-sidebar-link')) {
@@ -82,12 +78,10 @@ function processCommonUserLink() {
 function processNewUserForm() {
     $(document).on('submit', '#new-user-form', async (newUserFormEvent) => {
         newUserFormEvent.preventDefault();
-        console.log('tryNewUser');
         const usersTable = $('#users-table');
         const usersTableTab = $('#users-table-tab-link');
         const newUserForm = newUserFormEvent.target
         const jsonData = getJsonFromForm(newUserForm);
-        console.log(jsonData);
         let response = await fetch('/api/users', {
             method: 'POST',
             headers: {
@@ -95,7 +89,6 @@ function processNewUserForm() {
             },
             body: JSON.stringify(jsonData)
         });
-        console.log(response);
         if (response.ok) {
             const newAddedUser = await response.json();
             const rolesString = newAddedUser.roles.map(role => role.name).join(' ');
@@ -110,21 +103,17 @@ function processNewUserForm() {
 <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Delete</button></td>`);
             usersTable.append(newAddedUserRow);
             usersTableTab.click();
-            console.log(newAddedUser);
         } else {
             throw new Error('Request failed with status: ' + response.status);
         }
     })
-    console.log('processNewUserForm')
 }
 
 function processUsersTable() {
     $(document).on('click', '#users-table', (usersTableEvent) => {
         if ($(usersTableEvent.target).is('[data-target="#editModal"]')) {
-            console.log('fillEditUserForm(usersTableEvent)')
             fillEditUserForm(usersTableEvent);
         } else if ($(usersTableEvent.target).is('[data-target="#deleteModal"]')) {
-            console.log('fillDeleteUserForm(usersTableEvent)')
             fillDeleteUserForm(usersTableEvent);
         }
     })
@@ -167,10 +156,8 @@ function processEditUserForm(userRow) {
     $(document).on('submit', '#edit-user-form', async (editUserFormEvent) => {
         editUserFormEvent.preventDefault();
         const editUserForm = editUserFormEvent.target
-        console.log(editUserForm)
         const jsonData = getJsonFromForm(editUserForm);
         const editUserFormButtonClose = $(editUserForm).find('button.close');
-        console.log(jsonData);
         let response = await fetch('/api/users', {
             method: 'PATCH',
             headers: {
@@ -186,7 +173,6 @@ function processEditUserForm(userRow) {
             userRow.find('.age').text(editedUser.age);
             userRow.find('.email').text(editedUser.email);
             userRow.find('.roles').text(rolesString);
-            console.log(editedUser);
             editUserFormButtonClose.click();
         } else {
             throw new Error('Request failed with status: ' + response.status);
@@ -230,7 +216,6 @@ function processDeleteUserForm(userRow) {
         deleteUserFormEvent.preventDefault()
         const deleteUserForm = $(deleteUserFormEvent.target)
         const id = deleteUserForm.find('[name="id"]').val();
-        console.log(id)
 
         let response = await fetch('/api/users/' + id, {
             method: 'DELETE',
@@ -239,7 +224,6 @@ function processDeleteUserForm(userRow) {
             }
         })
         if (response.ok) {
-            console.log(response)
             const deleteFormButtonClose = deleteUserForm.find('button.close');
             deleteFormButtonClose.click()
             userRow.remove()
@@ -252,10 +236,6 @@ function processDeleteUserForm(userRow) {
 
 function getJsonFromForm(form) {
     const formData = new FormData(form)
-    console.log(formData)
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ': ' + pair[1])
-    }
     const jsonData = {}
     formData.forEach(function (value, key) {
         if (key === 'roles') {
@@ -267,6 +247,5 @@ function getJsonFromForm(form) {
             jsonData[key] = value
         }
     })
-    console.log(jsonData)
     return jsonData
 }

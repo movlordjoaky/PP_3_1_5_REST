@@ -34,11 +34,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User addUser(User user) {
-        System.out.println("111" + user);
         String newPassword = passwordEncoder.encode(user.getPassword());
-        System.out.println(newPassword);
         user.setPassword(newPassword);
-        System.out.println(user);
         return userDAOImpl.addUser(user);
     }
 
