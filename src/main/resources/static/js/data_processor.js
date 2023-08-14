@@ -121,8 +121,10 @@ function processNewUserForm() {
 function processUsersTable() {
     $(document).on('click', '#users-table', (usersTableEvent) => {
         if ($(usersTableEvent.target).is('[data-target="#editModal"]')) {
+            console.log('fillEditUserForm(usersTableEvent)')
             fillEditUserForm(usersTableEvent);
         } else if ($(usersTableEvent.target).is('[data-target="#deleteModal"]')) {
+            console.log('fillDeleteUserForm(usersTableEvent)')
             fillDeleteUserForm(usersTableEvent);
         }
     })
@@ -165,6 +167,7 @@ function processEditUserForm(userRow) {
     $(document).on('submit', '#edit-user-form', async (editUserFormEvent) => {
         editUserFormEvent.preventDefault();
         const editUserForm = editUserFormEvent.target
+        console.log(editUserForm)
         const jsonData = getJsonFromForm(editUserForm);
         const editUserFormButtonClose = $(editUserForm).find('button.close');
         console.log(jsonData);
@@ -223,8 +226,8 @@ function fillDeleteUserForm(usersTableEvent) {
 
 
 function processDeleteUserForm(userRow) {
-    const deleteUserForm = $('#delete-user-form')
-    $(document).on('submit', deleteUserForm, async (deleteUserFormEvent) => {
+    $(document).on('submit', '#delete-user-form', async (deleteUserFormEvent) => {
+        const deleteUserForm = deleteUserFormEvent.target
         deleteUserFormEvent.preventDefault()
         const id = deleteUserForm.find('[name="id"]').val();
         console.log(id)
