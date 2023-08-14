@@ -47,8 +47,7 @@ public class AdminController {
     @PatchMapping("/api/users")
     @ResponseBody
     public User editUser(@RequestBody User user) {
-        User newUser = userService.changeUser(user);
-        return newUser;
+        return userService.changeUser(user);
     }
 
     @DeleteMapping("/api/users/{id}")
