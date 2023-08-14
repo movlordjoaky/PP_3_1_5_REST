@@ -42,6 +42,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User changeUser(User newUser) {
+        String newPassword = passwordEncoder.encode(newUser.getPassword());
+        newUser.setPassword(newPassword);
         return userDAOImpl.changeUser(newUser);
     }
 

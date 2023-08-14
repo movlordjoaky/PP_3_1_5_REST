@@ -2,7 +2,7 @@ let currentUser
 processLoginForm()
 
 function processLoginForm() {
-    $(document).on('submit', '#login-form', async (loginFormEvent) => {
+    $(document).off('submit', '#login-form').on('submit', '#login-form', async (loginFormEvent) => {
         const loginErrorMessage = $('#login-error-message')
         loginErrorMessage.text('')
         loginFormEvent.preventDefault()
@@ -35,7 +35,7 @@ function processLoginForm() {
 }
 
 function processLogout() {
-    $(document).on('click', '#logout', async (logoutLinkEvent) => {
+    $(document).off('click', '#logout').on('click', '#logout', async (logoutLinkEvent) => {
         logoutLinkEvent.preventDefault();
         const response = await fetch('/logout-custom', {method: 'POST'});
         const newHtml = await response.text();
@@ -44,7 +44,7 @@ function processLogout() {
 }
 
 function processAdminLink() {
-    $(document).on('click', '#admin-link', async (adminLinkEvent) => {
+    $(document).off('click', '#admin-link').on('click', '#admin-link', async (adminLinkEvent) => {
         adminLinkEvent.preventDefault();
         const adminLink = $(adminLinkEvent.target);
         if (adminLink.hasClass('inactive-sidebar-link')) {
@@ -60,7 +60,7 @@ function processAdminLink() {
 }
 
 function processCommonUserLink() {
-    $(document).on('click', '#common-user-link', async (commonUserLinkEvent) => {
+    $(document).off('click', '#common-user-link').on('click', '#common-user-link', async (commonUserLinkEvent) => {
         commonUserLinkEvent.preventDefault();
         const commonUserLink = $(commonUserLinkEvent.target);
         if (commonUserLink.hasClass('inactive-sidebar-link')) {
@@ -76,7 +76,7 @@ function processCommonUserLink() {
 }
 
 function processNewUserForm() {
-    $(document).on('submit', '#new-user-form', async (newUserFormEvent) => {
+    $(document).off('submit', '#new-user-form').on('submit', '#new-user-form', async (newUserFormEvent) => {
         newUserFormEvent.preventDefault();
         const usersTable = $('#users-table');
         const usersTableTab = $('#users-table-tab-link');
@@ -110,7 +110,7 @@ function processNewUserForm() {
 }
 
 function processUsersTable() {
-    $(document).on('click', '#users-table', (usersTableEvent) => {
+    $(document).off('click', '#users-table').on('click', '#users-table', (usersTableEvent) => {
         if ($(usersTableEvent.target).is('[data-target="#editModal"]')) {
             fillEditUserForm(usersTableEvent);
         } else if ($(usersTableEvent.target).is('[data-target="#deleteModal"]')) {
@@ -153,7 +153,7 @@ function fillEditUserForm(usersTableEvent) {
 }
 
 function processEditUserForm(userRow) {
-    $(document).on('submit', '#edit-user-form', async (editUserFormEvent) => {
+    $(document).off('submit', '#edit-user-form').on('submit', '#edit-user-form', async (editUserFormEvent) => {
         editUserFormEvent.preventDefault();
         const editUserForm = editUserFormEvent.target
         const jsonData = getJsonFromForm(editUserForm);
@@ -212,7 +212,7 @@ function fillDeleteUserForm(usersTableEvent) {
 
 
 function processDeleteUserForm(userRow) {
-    $(document).on('submit', '#delete-user-form', async (deleteUserFormEvent) => {
+    $(document).off('submit', '#delete-user-form').on('submit', '#delete-user-form', async (deleteUserFormEvent) => {
         deleteUserFormEvent.preventDefault()
         const deleteUserForm = $(deleteUserFormEvent.target)
         const id = deleteUserForm.find('[name="id"]').val();
