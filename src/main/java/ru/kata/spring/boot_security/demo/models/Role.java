@@ -14,6 +14,7 @@ public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
+    @SuppressWarnings("unused")
     private Long id;
     @Column(unique = true)
     private String name;

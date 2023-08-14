@@ -19,7 +19,7 @@ public class CommonUserController {
     private final TemplateEngine templateEngine;
 
     @Autowired
-    public CommonUserController(UserService userService, RoleService roleService, AuthenticationManager authenticationManager, TemplateEngine templateEngine) {
+    public CommonUserController(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
 
