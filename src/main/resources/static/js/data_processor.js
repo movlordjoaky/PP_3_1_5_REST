@@ -227,8 +227,8 @@ function fillDeleteUserForm(usersTableEvent) {
 
 function processDeleteUserForm(userRow) {
     $(document).on('submit', '#delete-user-form', async (deleteUserFormEvent) => {
-        const deleteUserForm = deleteUserFormEvent.target
         deleteUserFormEvent.preventDefault()
+        const deleteUserForm = $(deleteUserFormEvent.target)
         const id = deleteUserForm.find('[name="id"]').val();
         console.log(id)
 
