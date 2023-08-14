@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.models;
 
 public class HtmlResponse {
     private String html;
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private User user;
 
     public HtmlResponse() {
