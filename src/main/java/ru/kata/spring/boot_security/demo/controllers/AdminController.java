@@ -24,6 +24,7 @@ public class AdminController {
     }
 
     // вывод админа
+    @SuppressWarnings("SameReturnValue")
     @GetMapping(value = "/admin")
     public String readUser(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();

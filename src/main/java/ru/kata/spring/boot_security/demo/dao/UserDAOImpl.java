@@ -38,11 +38,6 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserById(int id) {
-        return entityManager.find(User.class, id);
-    }
-
-    @Override
     public User addUser(User user) {
         Set<Role> updatedRoles = getRoleNamesFromRoles(user);
         updatedRoles.addAll(user.getRoles());
@@ -54,8 +49,6 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User changeUser(User newUser) {
         System.out.println(newUser);
-//        User oldUser = entityManager.find(User.class, newUser.getId());
-//        newUser.setId(oldUser.getId());
         newUser.setRoles(getRoleNamesFromRoles(newUser));
         return entityManager.merge(newUser);
     }

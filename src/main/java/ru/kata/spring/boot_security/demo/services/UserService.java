@@ -9,8 +9,6 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     List<User> getAllUsers();
 
-    User getUserById(int id);
-
     @Transactional
     User addUser(User user);
 

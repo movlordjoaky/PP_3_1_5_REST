@@ -16,16 +16,10 @@ import java.util.regex.Pattern;
 
 @Controller
 public class CommonUserController {
-    private final UserService userService;
-    private final RoleService roleService;
     private final TemplateEngine templateEngine;
-    private final AuthenticationManager authenticationManager;
 
     @Autowired
     public CommonUserController(UserService userService, RoleService roleService, AuthenticationManager authenticationManager, TemplateEngine templateEngine) {
-        this.userService = userService;
-        this.roleService = roleService;
-        this.authenticationManager = authenticationManager;
         this.templateEngine = templateEngine;
     }
 

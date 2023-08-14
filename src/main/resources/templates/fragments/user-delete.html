@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="utf-8">
+    <title></title>
 </head>
 <body>
 <div th:fragment="user-delete">
@@ -23,29 +24,33 @@
                     <div class="row justify-content-center m-0">
                         <div class="modal-body col-6 text-center">
                             <div class="form-group">
-                                <label class="font-weight-bold mb-0">ID</label>
-                                <input type="text" class="form-control form-control-sm" disabled
+                                <label for="delete-form-id" class="font-weight-bold mb-0">ID</label>
+                                <input id="delete-form-id" type="text" class="form-control form-control-sm" disabled
                                        name="id">
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold mb-0">First name</label>
-                                <input type="text" class="form-control form-control-sm" name="firstName" disabled>
+                                <label for="delete-form-firstname" class="font-weight-bold mb-0">First name</label>
+                                <input id="delete-form-firstname" type="text" class="form-control form-control-sm"
+                                       name="firstName" disabled>
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold mb-0">Last name</label>
-                                <input type="text" class="form-control form-control-sm" name="lastName" disabled>
+                                <label for="delete-form-lastname" class="font-weight-bold mb-0">Last name</label>
+                                <input id="delete-form-lastname" type="text" class="form-control form-control-sm"
+                                       name="lastName" disabled>
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold mb-0">Age</label>
-                                <input type="number" class="form-control form-control-sm" name="age" disabled>
+                                <label for="delete-form-age" class="font-weight-bold mb-0">Age</label>
+                                <input id="delete-form-age" type="number" class="form-control form-control-sm"
+                                       name="age" disabled>
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold mb-0">Email</label>
-                                <input type="email" class="form-control form-control-sm" name="email" disabled>
+                                <label for="delete-form-email" class="font-weight-bold mb-0">Email</label>
+                                <input id="delete-form-email" type="email" class="form-control form-control-sm"
+                                       name="email" disabled>
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold mb-0">Role</label>
-                                <select class="custom-select" multiple name="roles"
+                                <label for="delete-form-roles" class="font-weight-bold mb-0">Role</label>
+                                <select id="delete-form-roles" class="custom-select" multiple name="roles"
                                         disabled>
                                 </select>
                             </div>

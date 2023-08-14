@@ -12,3 +12,7 @@
 .sidebar-link:hover {
     text-decoration: none;
 }
+
+#login-form label {
+    display: none;
+}

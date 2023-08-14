@@ -50,40 +50,20 @@ public class User implements UserDetails {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override
@@ -149,9 +129,6 @@ public class User implements UserDetails {
     }
 
     public boolean hasRole(String roleName) {
-        if (roles.contains(new Role(roleName))) {
-            return true;
-        }
-        return false;
+        return roles.contains(new Role(roleName));
     }
 }

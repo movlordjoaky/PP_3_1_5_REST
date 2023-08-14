@@ -9,14 +9,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.kata.spring.boot_security.demo.models.UserRole;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    //    private final SuccessUserHandler successUserHandler;
     private final UserDetailsService userDetailsService;
 
     @Override
@@ -25,8 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    public WebSecurityConfig(/*SuccessUserHandler successUserHandler,*/ UserServiceImpl userService) {
-//        this.successUserHandler = successUserHandler;
+    public WebSecurityConfig(UserServiceImpl userService) {
         this.userDetailsService = userService;
     }
 
@@ -35,12 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
-    //    @Bean
-//    public RoleVoter roleVoter() {
-//        RoleVoter roleVoter = new RoleVoter();
-//        roleVoter.setRolePrefix("");
-//        return roleVoter;
-//    }
     @Bean
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
         return new GrantedAuthorityDefaults("");
@@ -53,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String[] staticResources = {"/static/js/*", "*.js"};
+        String[] staticResources = {"/static/js/*", "*.js", "/css/*"};
         http
                 .cors().disable()
                 .csrf().disable()
@@ -69,6 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 }

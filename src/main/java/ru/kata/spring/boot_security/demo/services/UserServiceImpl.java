@@ -28,11 +28,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
-        return userDAOImpl.getUserById(id);
-    }
-
-    @Override
     @Transactional
     public User addUser(User user) {
         return userDAOImpl.addUser(user);

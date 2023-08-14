@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
-import javax.persistence.ManyToMany;
-import java.util.Set;
 
 @Entity
 public class Role implements GrantedAuthority {
@@ -19,8 +17,6 @@ public class Role implements GrantedAuthority {
     private Long id;
     @Column(unique = true)
     private String name;
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
 
     public Role() {
     }
@@ -29,20 +25,8 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Override

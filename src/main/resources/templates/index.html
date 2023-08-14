@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="/css/style.css">
     <title>Login page</title>
 </head>
 <body>
@@ -16,10 +16,12 @@
             <!--/*@thymesVar id="user" type="ru.kata.spring.boot_security.demo.model.User"*/-->
             <form id="login-form">
                 <div class="mb-2">
-                    <input class="form-control" name="username" type="email" id="username" autofocus required
-                           placeholder="Email address">
-                    <input class="form-control" name="password" type="password" id="password" required
-                           placeholder="Password">
+                    <label for="username"></label><input class="form-control" name="username" type="email" id="username"
+                                                         autofocus required
+                                                         placeholder="Email address">
+                    <label for="password"></label><input class="form-control" name="password" type="password"
+                                                         id="password" required
+                                                         placeholder="Password">
                 </div>
                 <button class="btn btn-primary btn-block" type="submit">Sign in</button>
             </form>
